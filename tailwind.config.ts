@@ -17,12 +17,29 @@ const config = {
          fontFamily: {
             sans: ["var(--font-sans)", ...fontFamily.sans],
          },
+         minHeight: {
+            carousel: "calc(85vh - 4rem)",
+            section: "85vh",
+         },
          colors: {
             border: "hsl(var(--border))",
             input: "hsl(var(--input))",
             ring: "hsl(var(--ring))",
             background: "hsl(var(--background))",
             foreground: "hsl(var(--foreground))",
+            custom: {
+               DEFAULT: "var(--custom)",
+               light: "var(--custom-light)",
+               hover: "var(--custom-hover)",
+               marker: "var(--custom-marker)",
+               foreground: "var(--custom-foreground)",
+            },
+            product: {
+               blue: "var(--product-blue)",
+               gray: "var(--product-gray)",
+               pink: "var(--product-pink)",
+               black: "var(--product-gray)",
+            },
             primary: {
                DEFAULT: "hsl(var(--primary))",
                foreground: "hsl(var(--primary-foreground))",

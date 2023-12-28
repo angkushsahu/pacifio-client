@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import type { PropsWithChildren } from "react";
 import { Inter } from "next/font/google";
 
+import { BaseLayout } from "@root/wrappers";
 import { cn } from "@root/lib";
 
 import "@root/styles/globals.css";
@@ -8,7 +10,7 @@ import "@root/styles/globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 const websiteMeta = {
-   title: "Pacifio",
+   title: "Home - Pacifio",
    description:
       "A store to meet all the needs of the programmers today. From keyboards to cooling pads, we have jaw-dropping modern tech products for every budget. Check out your desired peripheral, order it if you like the product, and let us know about the product.",
 };
@@ -39,12 +41,14 @@ export const metadata: Metadata = {
    },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: PropsWithChildren) {
    return (
       <html lang="en">
          <link rel="manifest" href="/site.webmanifest" />
          <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
-            <>{children}</>
+            <BaseLayout>
+               <>{children}</>
+            </BaseLayout>
          </body>
       </html>
    );
