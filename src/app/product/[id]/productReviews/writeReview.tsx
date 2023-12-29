@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Trash } from "lucide-react";
 import { z } from "zod";
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Slider, Textarea } from "@root/components/ui";
@@ -85,6 +86,13 @@ export default function WriteReview() {
                   </form>
                </Form>
                {/* form -- end */}
+               {/* delete review if already exists -- start */}
+               <div className="flex justify-end">
+                  <span className="bg-destructive text-white p-2 text-xs">
+                     <Trash className="w-4 h-4 mr-1 inline" /> <span>Delete this review</span>
+                  </span>
+               </div>
+               {/* delete review if already exists -- end */}
             </DialogContent>
          </Dialog>
       </div>
