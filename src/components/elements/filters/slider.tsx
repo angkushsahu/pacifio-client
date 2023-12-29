@@ -1,11 +1,10 @@
-import type { Dispatch, SetStateAction } from "react";
 import Slider from "react-slider";
 
 import { formatNumber } from "@root/lib";
 
 export interface SliderComponentProps {
+   setValues: (value: [number, number]) => void;
    values: [number, number];
-   setValues: Dispatch<SetStateAction<[number, number]>>;
    MIN: number;
    MAX: number;
    isPrice?: boolean;

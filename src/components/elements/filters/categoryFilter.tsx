@@ -1,23 +1,14 @@
 "use client";
 
-import type { Dispatch, SetStateAction } from "react";
-
 import { categories as categoryArray } from "@root/constants/categories";
 import { Checkbox, Label } from "@root/components/ui";
 
 export interface CategoryFilterProps {
    categories: Array<string>;
-   setCategories: Dispatch<SetStateAction<Array<string>>>;
+   updateCategories: (value: string) => void;
 }
 
-export default function CategoryFilter({ categories, setCategories }: CategoryFilterProps) {
-   function updateCategoryLink(link: string) {
-      if (categories.includes(link)) {
-         const newCategories = categories.filter((category) => category !== link);
-         setCategories(newCategories);
-      } else setCategories((prev) => [...prev, link]);
-   }
-
+export default function CategoryFilter({ categories, updateCategories }: CategoryFilterProps) {
    return (
       <div>
          <p className="font-medium text-lg">Category</p>
@@ -27,7 +18,7 @@ export default function CategoryFilter({ categories, setCategories }: CategoryFi
                   <Checkbox
                      name={category.title}
                      id={category.title}
-                     onCheckedChange={() => updateCategoryLink(category.link)}
+                     onCheckedChange={() => updateCategories(category.link)}
                      checked={categories.includes(category.link)}
                   />
                   <Label htmlFor={category.title} className="text-base cursor-pointer">
