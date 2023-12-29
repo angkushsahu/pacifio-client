@@ -1,4 +1,5 @@
 export * from "./dropdown-menu";
+export * from "./alert-dialog";
 export * from "./textarea";
 export * from "./checkbox";
 export * from "./skeleton";

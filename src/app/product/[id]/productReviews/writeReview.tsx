@@ -2,11 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Trash } from "lucide-react";
 import { z } from "zod";
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Slider, Textarea } from "@root/components/ui";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@root/components/ui";
+import ConfirmDeletion from "./confirmDeletion";
 
 const reviewFormSchema = z.object({
    description: z.string().min(10, { message: "Review description should be at least 10 characters long" }),
@@ -87,11 +87,7 @@ export default function WriteReview() {
                </Form>
                {/* form -- end */}
                {/* delete review if already exists -- start */}
-               <div className="flex justify-end">
-                  <span className="bg-destructive text-white p-2 text-xs">
-                     <Trash className="w-4 h-4 mr-1 inline" /> <span>Delete this review</span>
-                  </span>
-               </div>
+               <ConfirmDeletion />
                {/* delete review if already exists -- end */}
             </DialogContent>
          </Dialog>

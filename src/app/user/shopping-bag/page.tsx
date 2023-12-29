@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { homeUrl, shippingUrl } from "@root/constants/routes";
+import ShoppingBagSummary from "./shoppingBagSummary";
+import ShoppingBagItem from "./shoppingBagItem";
 import { Button } from "@root/components/ui";
-import CartSummary from "./cartSummary";
-import CartItem from "./cartItem";
 
 export const metadata: Metadata = {
    title: "Your shopping bag - Pacifio",
 };
 
-const cartItem = {
+const shoppingBagItem = {
    totalItems: 5,
    totalPrice: 2300,
    image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1688629061/pacifio/miscellaneous/banner-keyboard_jpsbah.png",
@@ -26,13 +26,13 @@ export default function ShoppingBag() {
    return (
       <main className="min-h-section center-layout px-5 py-8">
          <h1 className="font-semibold text-3xl mb-6">Shopping Bag</h1>
-         <CartSummary totalItems={cartItem.totalItems} totalPrice={cartItem.totalPrice} />
+         <ShoppingBagSummary totalItems={shoppingBagItem.totalItems} totalPrice={shoppingBagItem.totalPrice} />
          <section className="border-y-[1px] border-custom-light divide-y-[1px] divide-custom-light">
             {Array.from({ length: 5 }).map((_, idx) => (
-               <CartItem {...cartItem} productIdx={idx + 1} key={`cart-item-${idx + 1}`} />
+               <ShoppingBagItem {...shoppingBagItem} productIdx={idx + 1} key={`shoppingBag-item-${idx + 1}`} />
             ))}
          </section>
-         <CartSummary totalItems={cartItem.totalItems} totalPrice={cartItem.totalPrice} />
+         <ShoppingBagSummary totalItems={shoppingBagItem.totalItems} totalPrice={shoppingBagItem.totalPrice} />
          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-y-3">
             <Link href={homeUrl} className="text-custom-foreground order-1 sm:order-none underline underline-offset-4">
                Continue shopping

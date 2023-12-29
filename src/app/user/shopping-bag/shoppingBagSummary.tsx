@@ -1,11 +1,11 @@
 import { formatNumber } from "@root/lib";
 
-export interface CartSummaryProps {
+export interface ShoppingBagSummaryProps {
    totalItems: number;
    totalPrice: number;
 }
 
-export default function CartSummary({ totalItems, totalPrice }: CartSummaryProps) {
+export default function ShoppingBagSummary({ totalItems, totalPrice }: ShoppingBagSummaryProps) {
    return (
       <div className="flex items-center justify-between my-5">
          <p className="text-custom-foreground text-lg">

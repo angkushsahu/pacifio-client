@@ -1,12 +1,12 @@
-import { Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { formatNumber, getCardBackgroundColor, shortenSentence } from "@root/lib";
 import { productUrl } from "@root/constants/routes";
+import ConfirmDeletion from "./confirmDeletion";
 import UpdateQuantity from "./updateQuantity";
 
-export interface CartItemProps {
+export interface ShoppingBagItemProps {
    productId: string;
    productIdx: number;
    image: string;
@@ -17,7 +17,7 @@ export interface CartItemProps {
    totalPricePerItem: number;
 }
 
-export default function CartItem(props: CartItemProps) {
+export default function ShoppingBagItem(props: ShoppingBagItemProps) {
    const { productId, productIdx, image, price, quantity, stock, title, totalPricePerItem } = props;
    let { isLong, shortenedString } = shortenSentence({ maxCharacters: 40, sentence: title });
    shortenedString += isLong ? " ...." : "";
@@ -53,9 +53,7 @@ export default function CartItem(props: CartItemProps) {
             {/* totalPrice and delete item -- start */}
             <div className="flex flex-col justify-between">
                <p className="text-xl font-semibold mb-2">₹ {formatNumber(totalPricePerItem)}</p>
-               <span className="flex items-center text-xs text-destructive cursor-pointer">
-                  <Trash className="mr-2 w-3 h-3" /> Delete this item
-               </span>
+               <ConfirmDeletion />
             </div>
          </section>
          {/* totalPrice and delete item -- end */}
