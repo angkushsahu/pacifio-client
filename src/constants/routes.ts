@@ -13,4 +13,6 @@ export const shoppingBagUrl = "/user/shopping-bag";
 
 export const adminStatsUrl = "/admin/stats";
 
+export const shippingUrl = "/shipping";
+
 export const allOrdersUrl = "/orders/all";

@@ -10,6 +10,7 @@ export default function Products() {
             {Array.from({ length: 5 }).map((_, idx) => (
                <>
                   <ProductCard
+                     productId="something"
                      inStock={true}
                      maxRating={5}
                      price={243000123}
@@ -21,6 +22,7 @@ export default function Products() {
                      idx={2 * idx + 1}
                   />
                   <ProductCard
+                     productId="something"
                      inStock={false}
                      maxRating={5}
                      price={243000123}

@@ -1,10 +1,11 @@
 import Link from "next/link";
 
-import { formatNumber } from "@root/lib";
-import { ProductStockBadge } from "..";
+import { formatNumber, shortenSentence } from "@root/lib";
 import ProductImage from "./productImage";
+import { ProductStockBadge } from "..";
 
 export interface ProductCardProps {
+   productId: string;
    title: string;
    price: number;
    inStock: boolean;
@@ -17,8 +18,8 @@ export interface ProductCardProps {
 }
 
 export default function ProductCard(product: ProductCardProps) {
-   let shortenedProductName = product.title.trim().split(" ").slice(0, 6).join(" ");
-   shortenedProductName += shortenedProductName.length < product.title.trim().length ? " ...." : "";
+   let { isLong, shortenedString } = shortenSentence({ maxCharacters: 33, sentence: product.title });
+   shortenedString += isLong ? " ...." : "";
 
    const productImage = <ProductImage productIdx={product.idx} productTitle={product.title} imageUrl={product.image} />;
 
@@ -26,7 +27,7 @@ export default function ProductCard(product: ProductCardProps) {
       <article>
          <div>{product.link ? <Link href={product.link}>{productImage}</Link> : productImage}</div>
          <p className="text-lg font-semibold mt-5 mb-2">
-            {product.link ? <Link href={product.link}>{shortenedProductName}</Link> : shortenedProductName}
+            {product.link ? <Link href={product.link}>{shortenedString}</Link> : shortenedString}
          </p>
          <div className="flex text-custom-foreground">
             <div className="flex-1">
