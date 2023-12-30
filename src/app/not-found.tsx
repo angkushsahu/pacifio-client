@@ -1,8 +1,13 @@
 import { FileX, Home } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { homeUrl } from "@root/constants/routes";
 import { Button } from "@root/components/ui";
+
+export const metadata: Metadata = {
+   title: "Page does not exist - Pacifio",
+};
 
 export default function NotFound() {
    return (

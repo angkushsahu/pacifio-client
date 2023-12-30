@@ -1,12 +1,8 @@
 "use client";
 
 import { Frown, RotateCcwIcon } from "lucide-react";
+import type { ErrorProps } from "@root/types";
 import { Button } from "@root/components/ui";
-
-export interface ErrorProps {
-   error: Error & { digest?: string };
-   reset: () => void;
-}
 
 export default function Error({ error, reset }: ErrorProps) {
    return (

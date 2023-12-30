@@ -5,7 +5,7 @@ import {
    contactUrl,
    homeUrl,
    loginUrl,
-   registerUrl,
+   signupUrl,
    shoppingBagUrl,
    userAccountUrl,
 } from "@root/constants/routes";
@@ -24,5 +24,5 @@ export const authenticatedItems = [
 
 export const unAuthenticatedLinks = [
    { Icon: LogIn, title: "LOGIN", link: loginUrl },
-   { Icon: UserPlus, title: "SIGNUP", link: registerUrl },
+   { Icon: UserPlus, title: "SIGNUP", link: signupUrl },
 ];

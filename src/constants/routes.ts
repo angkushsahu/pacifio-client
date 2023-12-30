@@ -3,7 +3,9 @@ export const aboutUrl = "/about";
 export const contactUrl = "/contact";
 
 export const loginUrl = "/auth/login";
-export const registerUrl = "/auth/register";
+export const signupUrl = "/auth/signup";
+export const resetPasswordUrl = "/auth/reset-password";
+export const forgotPasswordUrl = "/auth/forgot-password";
 
 export const productUrl = "/product";
 export const productsUrl = "/products";
@@ -11,7 +13,7 @@ export const productsUrl = "/products";
 export const userAccountUrl = "/user/account";
 export const shoppingBagUrl = "/user/shopping-bag";
 export const userAccountUpdateUrl = "/user/account/update";
-export const userPasswordUpdateUrl = "/user/password/update";
+export const userPasswordUpdateUrl = "/user/change-password";
 
 export const adminStatsUrl = "/admin/stats";
 
@@ -21,6 +23,6 @@ export const updateAddressUrl = "/address/update";
 export const shippingUrl = "/shipping/choose-address";
 
 export const viewOrderUrl = "/order";
-export const allOrdersUrl = "/orders/all";
+export const allOrdersUrl = "/order/all";
 export const paymentUrl = "/order/payment";
 export const confirmOrderUrl = "/order/confirm";
