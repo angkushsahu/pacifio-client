@@ -4,9 +4,9 @@ import { createAddressUrl } from "@root/constants/routes";
 import ShowAllAddress from "./showAllAddress";
 
 export default function AddressParent() {
-   const isAddressEmpty = !false;
+   const isAddressEmpty = false;
 
-   if (isAddressEmpty) redirect(createAddressUrl);
+   if (isAddressEmpty) redirect(`${createAddressUrl}?shipping=true`);
 
    return (
       <main className="min-h-section center-layout px-5 pt-8 pb-12">

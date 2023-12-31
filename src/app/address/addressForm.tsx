@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -18,6 +19,9 @@ const addressFormSchema = z.object({
 export type AddressFormType = z.infer<typeof addressFormSchema>;
 
 export default function AddressForm(props: AddressFormType) {
+   const searchParams = useSearchParams();
+   console.log(searchParams.get("shipping"));
+
    const { contactNumber, country, city, location, pincode, state } = props;
    const addressForm = useForm<AddressFormType>({
       resolver: zodResolver(addressFormSchema),

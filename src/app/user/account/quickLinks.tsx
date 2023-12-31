@@ -25,7 +25,7 @@ const quickLinks = [
    },
    {
       Icon: SquareUser,
-      title: "Update Profile",
+      title: "Update Account",
       description: "Update your name and e-mail address here",
       path: userAccountUpdateUrl,
    },

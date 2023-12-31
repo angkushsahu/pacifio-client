@@ -16,7 +16,7 @@ export default function NavAndSearch() {
             <DropdownMenuTrigger className="rounded-full bg-neutral-900 p-2">
                <Menu className="text-white w-4 h-4 sm:w-5 sm:h-5" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="p-3 shadow-lg">
+            <DropdownMenuContent align="start" className="p-3 shadow-lg mr-8 md:mr-0">
                <DropdownMenuGroup className="hidden md:block">
                   {commonNavItems.map((navItem) => (
                      <Link href={navItem.link} key={navItem.title}>

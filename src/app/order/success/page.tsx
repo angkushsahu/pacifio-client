@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import backgroundImage from "@root/assets/orderSuccessBackground.svg";
 import successImage from "@root/assets/successImage.svg";
-import type { ServerPageProps } from "@root/types";
 import { homeUrl } from "@root/constants/routes";
 import { Button } from "@root/components/ui";
 
@@ -12,9 +11,7 @@ export const metadata: Metadata = {
    title: "Order placed successfully - Pacifio",
 };
 
-export default function OrderSuccess({ searchParams }: ServerPageProps) {
-   if (!searchParams.order_id) throw new Error("Unable to track your order", { cause: "404" });
-
+export default function OrderSuccess() {
    return (
       <main className="min-h-section center-layout px-5 py-8 flex flex-col items-center justify-center relative">
          <Image src={backgroundImage} alt="Success Image" fill className="-z-10" />

@@ -52,7 +52,7 @@ export default function ShowAllAddress() {
                   <Button className="w-full">Use selected Address</Button>
                </Link>
             ) : null}
-            <Link href={createAddressUrl} className="w-full sm:w-48">
+            <Link href={`${createAddressUrl}?shipping=true`} className="w-full sm:w-48">
                <Button variant="outline" className="border-2 border-custom-foreground w-full">
                   Add New Address
                </Button>

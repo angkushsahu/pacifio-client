@@ -1,3 +1,6 @@
+export { default as AdminSidebar } from "./adminComponents/adminSidebar";
+export { default as AdminSearch } from "./adminComponents/adminSearch";
+export { default as AdminTable } from "./adminComponents/adminTable";
 export { default as CategoryFilter } from "./filters/categoryFilter";
 export { default as ProductStockBadge } from "./productStockBadge";
 export { default as RatingFilter } from "./filters/ratingFilter";

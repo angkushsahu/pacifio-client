@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { formatNumber, getCardBackgroundColor, shortenSentence } from "@root/lib";
-import { productUrl } from "@root/constants/routes";
+import { baseProductUrl } from "@root/constants/routes";
 import ConfirmDeletion from "./confirmDeletion";
 import UpdateQuantity from "./updateQuantity";
 
@@ -22,7 +22,7 @@ export default function ShoppingBagItem(props: ShoppingBagItemProps) {
    let { isLong, shortenedString } = shortenSentence({ maxCharacters: 40, sentence: title });
    shortenedString += isLong ? " ...." : "";
 
-   const linkToProduct = `${productUrl}/${productId}`;
+   const linkToProduct = `${baseProductUrl}/${productId}`;
 
    return (
       <article className="py-5 flex flex-col sm:flex-row gap-x-5">

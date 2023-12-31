@@ -14,3 +14,5 @@ export interface ServerPageProps {
 
 export type OrderStatusType = "processing" | "shipped" | "delivered";
 export type PaymentStatusType = "paid" | "not-paid";
+export type UserRoleType = "user" | "admin";
+export type ProductStockType = "empty" | "non-empty";

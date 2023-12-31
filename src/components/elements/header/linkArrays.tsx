@@ -1,7 +1,7 @@
-import { Home, Info, LogIn, Mail, ShieldCheck, ShoppingBag, UserPlus, UserRound } from "lucide-react";
+import { Home, Info, LogIn, Mail, ShieldCheck, ShoppingBasket, UserPlus, UserRound } from "lucide-react";
 import {
    aboutUrl,
-   adminStatsUrl,
+   adminDashboardUrl,
    contactUrl,
    homeUrl,
    loginUrl,
@@ -18,8 +18,8 @@ export const commonNavItems = [
 
 export const authenticatedItems = [
    { Icon: UserRound, title: "ACCOUNT", link: userAccountUrl },
-   { Icon: ShoppingBag, title: "SHOPPING BAG", link: shoppingBagUrl },
-   { Icon: ShieldCheck, title: "ADMIN DASHBOARD", link: adminStatsUrl },
+   { Icon: ShoppingBasket, title: "SHOPPING BAG", link: shoppingBagUrl },
+   { Icon: ShieldCheck, title: "ADMIN DASHBOARD", link: adminDashboardUrl },
 ];
 
 export const unAuthenticatedLinks = [

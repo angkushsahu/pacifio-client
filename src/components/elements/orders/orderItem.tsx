@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { formatNumber, getCardBackgroundColor, shortenSentence } from "@root/lib";
-import { productUrl } from "@root/constants/routes";
+import { baseProductUrl } from "@root/constants/routes";
 
 export interface OrderItemProps {
    productId: string;
@@ -20,7 +20,7 @@ export default function OrderItem(props: OrderItemProps) {
    let { isLong, shortenedString } = shortenSentence({ maxCharacters: 40, sentence: title });
    shortenedString += isLong ? " ...." : "";
 
-   const linkToProduct = `${productUrl}/${productId}`;
+   const linkToProduct = `${baseProductUrl}/${productId}`;
 
    return (
       <article className="py-5 flex flex-col sm:flex-row gap-x-5">

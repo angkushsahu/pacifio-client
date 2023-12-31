@@ -1,5 +1,5 @@
 import { ProductCard } from "@root/components/elements";
-import { productUrl } from "@root/constants/routes";
+import { baseProductUrl } from "@root/constants/routes";
 import { Button } from "@root/components/ui";
 import EmptyProducts from "./emptyProducts";
 
@@ -23,7 +23,7 @@ export default function ProductsParent() {
                      reviews={23498}
                      title="KUMARA K552 - TKL WIRED MECHNICAL KEYBAORD RAINBOW (RED SWITCH)"
                      image="https://res.cloudinary.com/dvhucdquc/image/upload/v1688629061/pacifio/miscellaneous/banner-keyboard_jpsbah.png"
-                     link={`${productUrl}/something`}
+                     link={`${baseProductUrl}/something`}
                      idx={2 * idx + 1}
                   />
                   <ProductCard
