@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
+
 import AccountInfo from "./accountInfo";
 import DangerZone from "./dangerZone";
 import QuickLinks from "./quickLinks";
+
+export const metadata: Metadata = {
+   title: "Your Account - Pacifio",
+};
 
 export default function Account() {
    return (
