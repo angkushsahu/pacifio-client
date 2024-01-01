@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
-import ParentAdminTransactions from "./parentAdminTransactions";
+import ParentComponent from "./parentComponent";
 
 export const metadata: Metadata = {
    title: "Transactions - Pacifio",
 };
 
 export default function Transactions() {
-   return <ParentAdminTransactions />;
+   return <ParentComponent />;
 }

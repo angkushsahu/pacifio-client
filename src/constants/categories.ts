@@ -7,3 +7,5 @@ export const categories = [
    { Icon: Square, title: "Mouse Pad", link: "mouse-pad" },
    { Icon: Fan, title: "Cooling Pad", link: "cooling-pad" },
 ];
+
+export type CategoryType = "mouse" | "cooling-pad" | "mouse-pad" | "keyboard" | "headset";

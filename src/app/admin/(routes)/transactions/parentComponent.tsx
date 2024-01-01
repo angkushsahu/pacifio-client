@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { AdminSearch, AdminTable } from "@root/components/elements";
+import { AdminSearch, AdminTable } from "@root/components/custom";
 import TransactionActions from "./actions";
 
 const headContents = ["Customer Mail", "Amount", "Payment Method", "Date and Time"];
@@ -20,7 +20,7 @@ const bodyContents = [
    ["angkushsahu2502@gmail.com", 29000, "**** 4242", "29th Sept, 2023"],
 ];
 
-export default function ParentAdminTransactions() {
+export default function ParentComponent() {
    const [value, setValue] = useState("");
 
    return (

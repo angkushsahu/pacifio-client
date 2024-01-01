@@ -7,7 +7,7 @@ const account = {
    joinedOn: "29th September, 2029",
 };
 
-export default function ParentAdminUserView() {
+export default function ParentComponent() {
    return (
       <div>
          <h1 className="font-semibold text-3xl mb-4">User Account</h1>

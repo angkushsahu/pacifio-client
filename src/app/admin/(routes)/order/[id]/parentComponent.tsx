@@ -1,4 +1,4 @@
-import { OrderStatus, Orders, PaymentStatus } from "@root/components/elements";
+import { OrderStatus, Orders, PaymentStatus } from "@root/components/custom";
 import UpdateOrderStatus from "./updateOrderStatus";
 
 const orderSummary = {
@@ -32,7 +32,7 @@ const orderSummary = {
    },
 };
 
-export default function ParentAdminOrderView() {
+export default function ParentComponent() {
    return (
       <div>
          <h1 className="font-semibold text-3xl mb-4">Order Stats</h1>

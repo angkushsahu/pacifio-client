@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { AdminSearch, AdminTable } from "@root/components/elements";
+import { AdminSearch, AdminTable } from "@root/components/custom";
 import type { UserRoleType } from "@root/types";
 import UserActions from "./actions";
 
@@ -21,11 +21,11 @@ const bodyContents = [
    ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
 ];
 
-export interface ParentAdminUsersProps {
+export interface ParentComponentProps {
    role: UserRoleType;
 }
 
-export default function ParentAdminUsers({ role }: ParentAdminUsersProps) {
+export default function ParentComponent({ role }: ParentComponentProps) {
    const [value, setValue] = useState("");
    const userRole = role[0].toUpperCase() + role.substring(1);
    return (

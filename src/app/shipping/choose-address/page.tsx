@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
-import AddressParent from "./addressParent";
+import ParentComponent from "./parentComponent";
 
 export const metadata: Metadata = {
    title: "Shipping order - Pacifio",
 };
 
 export default function Shipping() {
-   return <AddressParent />;
+   return <ParentComponent />;
 }

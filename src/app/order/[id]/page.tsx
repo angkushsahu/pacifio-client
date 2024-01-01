@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { Orders } from "@root/components/elements";
+import { Orders } from "@root/components/custom";
 import { homeUrl } from "@root/constants/routes";
 import { Button } from "@root/components/ui";
 import OrderInfo from "./orderInfo";

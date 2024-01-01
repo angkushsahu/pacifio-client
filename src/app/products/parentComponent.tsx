@@ -1,9 +1,9 @@
-import { ProductCard } from "@root/components/elements";
+import { ProductCard } from "@root/components/custom";
 import { baseProductUrl } from "@root/constants/routes";
 import { Button } from "@root/components/ui";
 import EmptyProducts from "./emptyProducts";
 
-export default function ProductsParent() {
+export default function ParentComponent() {
    const isProductsEmpty = false;
 
    if (isProductsEmpty) return <EmptyProducts />;

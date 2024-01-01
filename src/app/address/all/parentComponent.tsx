@@ -1,7 +1,7 @@
 import ShowAllAddress from "./showAllAddress";
 import EmptyAddress from "./emptyAddress";
 
-export default function AddressParent() {
+export default function ParentComponent() {
    const isAddressEmpty = false;
 
    if (isAddressEmpty) return <EmptyAddress />;

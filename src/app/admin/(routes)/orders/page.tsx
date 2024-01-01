@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import type { OrderStatusType, ServerPageProps } from "@root/types";
-import ParentAdminOrders from "./parentAdminOrders";
+import ParentComponent from "./parentComponent";
 import { getMetadata } from "@root/lib";
 
 export function generateMetadata({ searchParams }: ServerPageProps) {
@@ -17,5 +17,5 @@ export default function AdminOrders({ searchParams }: ServerPageProps) {
    const { status } = searchParams;
    if (!status || typeof status !== "string") notFound();
 
-   return <ParentAdminOrders status={status as OrderStatusType} />;
+   return <ParentComponent status={status as OrderStatusType} />;
 }

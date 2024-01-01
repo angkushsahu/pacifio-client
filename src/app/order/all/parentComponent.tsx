@@ -5,7 +5,7 @@ import { Button } from "@root/components/ui";
 import EmptyOrders from "./emptyOrders";
 import OrderBox from "./orderBox";
 
-export default function AllOrdersParent() {
+export default function ParentComponent() {
    const areOrdersEmpty = false;
 
    if (areOrdersEmpty) return <EmptyOrders />;

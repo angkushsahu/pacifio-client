@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { PropsWithChildren } from "react";
+import { Toaster } from "@root/components/ui";
 import { Inter } from "next/font/google";
 
 import { BaseLayout } from "@root/wrappers";
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
          <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
             <BaseLayout>
                <>{children}</>
+               <Toaster />
             </BaseLayout>
          </body>
       </html>

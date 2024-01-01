@@ -1,4 +1,4 @@
-import { OrderStatus, PaymentStatus } from "@root/components/elements";
+import { OrderStatus, PaymentStatus } from "@root/components/custom";
 
 export interface OrderInfoProps {
    address: {

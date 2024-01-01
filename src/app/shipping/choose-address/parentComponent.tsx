@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { createAddressUrl } from "@root/constants/routes";
 import ShowAllAddress from "./showAllAddress";
 
-export default function AddressParent() {
+export default function ParentComponent() {
    const isAddressEmpty = false;
 
    if (isAddressEmpty) redirect(`${createAddressUrl}?shipping=true`);

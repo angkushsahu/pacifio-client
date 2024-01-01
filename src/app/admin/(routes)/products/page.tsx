@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import type { ProductStockType, ServerPageProps } from "@root/types";
-import ParentAdminProducts from "./parentAdminProducts";
+import ParentComponent from "./parentComponent";
 import isOutofStock from "./isOutofStock";
 
 export function generateMetadata({ searchParams }: ServerPageProps) {
@@ -22,5 +22,5 @@ export default function AdminUsers({ searchParams }: ServerPageProps) {
    const { stock } = searchParams;
    if (!stock || typeof stock !== "string") notFound();
 
-   return <ParentAdminProducts stock={stock as ProductStockType} />;
+   return <ParentComponent stock={stock as ProductStockType} />;
 }

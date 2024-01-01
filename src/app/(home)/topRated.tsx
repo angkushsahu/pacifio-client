@@ -1,4 +1,4 @@
-import { ProductCard } from "@root/components/elements";
+import { ProductCard } from "@root/components/custom";
 import { baseProductUrl } from "@root/constants/routes";
 
 export default function TopRated() {

@@ -1,4 +1,4 @@
-import { Footer, Header } from "@root/components/elements";
+import { Footer, Header } from "@root/components/custom";
 import type { PropsWithChildren } from "react";
 
 export default function BaseLayout({ children }: PropsWithChildren) {

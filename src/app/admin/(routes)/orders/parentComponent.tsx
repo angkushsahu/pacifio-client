@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { AdminSearch, AdminTable } from "@root/components/elements";
+import { AdminSearch, AdminTable } from "@root/components/custom";
 import type { OrderStatusType } from "@root/types";
 import OrderActions from "./actions";
 
@@ -21,11 +21,11 @@ const bodyContents = [
    ["17 Feb, 2019", 2050, "Processing", "26th July, 2019", "abracadabra11980@gmail.com"],
 ];
 
-export interface ParentAdminOrdersProps {
+export interface ParentComponentProps {
    status: OrderStatusType;
 }
 
-export default function ParentAdminOrders({ status }: ParentAdminOrdersProps) {
+export default function ParentComponent({ status }: ParentComponentProps) {
    const [value, setValue] = useState("");
    const orderStatus = status[0].toUpperCase() + status.substring(1);
 

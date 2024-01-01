@@ -1,7 +1,7 @@
-import ParentAdminUserView from "./parentAdminUserView";
+import ParentComponent from "./parentComponent";
 
 // meta data comes here
 
 export default function AdminViewUser() {
-   return <ParentAdminUserView />;
+   return <ParentComponent />;
 }

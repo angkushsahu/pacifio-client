@@ -1,3 +1,4 @@
+export { default as ProductCreationStepper } from "./adminComponents/productCreationStepper";
 export { default as AdminSidebar } from "./adminComponents/adminSidebar";
 export { default as AdminSearch } from "./adminComponents/adminSearch";
 export { default as AdminTable } from "./adminComponents/adminTable";

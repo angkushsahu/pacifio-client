@@ -18,7 +18,7 @@ const shoppingBagItem = {
    totalPricePerItem: 6900,
 };
 
-export default function ShoppingBagParent() {
+export default function ParentComponent() {
    const isShoppingBagEmpty = false;
 
    if (isShoppingBagEmpty) return <EmptyShoppingBag />;

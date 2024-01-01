@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 
-import { AdminSidebar } from "@root/components/elements";
+import { AdminSidebar } from "@root/components/custom";
 
 export default function RootLayout({ children }: PropsWithChildren) {
    return (

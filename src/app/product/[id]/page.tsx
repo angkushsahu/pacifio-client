@@ -1,4 +1,4 @@
-import { ProductStockBadge } from "@root/components/elements";
+import { ProductStockBadge } from "@root/components/custom";
 import ProductReviews from "./productReviews/listReviews";
 import ProductCarousel from "./productCarousel";
 import { formatNumber } from "@root/lib";

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
-import AllOrdersParent from "./allOrdersParent";
+import ParentComponent from "./parentComponent";
 
 export const metadata: Metadata = {
    title: "Order History - Pacifio",
 };
 
 export default function AllOrders() {
-   return <AllOrdersParent />;
+   return <ParentComponent />;
 }

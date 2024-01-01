@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { AdminSearch, AdminTable } from "@root/components/elements";
+import { AdminSearch, AdminTable } from "@root/components/custom";
 import type { ProductStockType } from "@root/types";
 import isOutofStock from "./isOutofStock";
 import ProductActions from "./actions";
@@ -22,11 +22,11 @@ const bodyContents = [
    ["Abra ca Dabra Abra", 29000, "Cooling Pads", 1000],
 ];
 
-export interface ParentAdminProductsProps {
+export interface ParentComponentProps {
    stock: ProductStockType;
 }
 
-export default function ParentAdminProducts({ stock }: ParentAdminProductsProps) {
+export default function ParentComponent({ stock }: ParentComponentProps) {
    const [value, setValue] = useState("");
 
    return (

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import type { UserRoleType, ServerPageProps } from "@root/types";
-import ParentAdminUsers from "./parentAdminUsers";
+import ParentComponent from "./parentComponent";
 import { getMetadata } from "@root/lib";
 
 export function generateMetadata({ searchParams }: ServerPageProps) {
@@ -17,5 +17,5 @@ export default function AdminUsers({ searchParams }: ServerPageProps) {
    const { role } = searchParams;
    if (!role || typeof role !== "string") notFound();
 
-   return <ParentAdminUsers role={role as UserRoleType} />;
+   return <ParentComponent role={role as UserRoleType} />;
 }

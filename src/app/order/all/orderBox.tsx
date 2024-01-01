@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { OrderStatus, PaymentStatus } from "@root/components/elements";
+import { OrderStatus, PaymentStatus } from "@root/components/custom";
 import { viewOrderUrl } from "@root/constants/routes";
 import { shortenSentence } from "@root/lib";
 
