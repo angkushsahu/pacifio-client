@@ -3,12 +3,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import Link from "next/link";
 import { z } from "zod";
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "@root/components/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "@root/components/ui";
+import type { AuthenticateUser } from "@root/types";
 import { loginUrl } from "@root/constants/routes";
+import { errorSchema } from "@root/validations";
+import { nextAuthSignin } from "@root/lib";
+import { useSignup } from "@root/hooks";
 
 const signupFormSchema = z
    .object({
@@ -30,7 +35,22 @@ export default function SignupForm() {
       defaultValues: { email: "", name: "", password: "", confirmPassword: "" },
    });
 
-   function onSignup(values: SignupFormType) {}
+   function onSuccess(data: AuthenticateUser) {
+      signupForm.reset();
+      nextAuthSignin({ message: data.message, token: data.data.token, user: data.data.user });
+   }
+   function onError(error: AxiosError) {
+      const validatedError = errorSchema.safeParse(error.response?.data);
+      if (validatedError.success) toast({ title: validatedError.data.message, variant: "destructive" });
+      else toast({ title: error.message, variant: "destructive" });
+   }
+
+   const { mutate: signupUser, isPending } = useSignup({ onError, onSuccess });
+
+   function onSignup(values: SignupFormType) {
+      if (isPending) return;
+      signupUser(values);
+   }
 
    return (
       <>
@@ -114,7 +134,7 @@ export default function SignupForm() {
                      </FormItem>
                   )}
                />
-               <Button type="submit" className="w-full">
+               <Button type="submit" className="w-full" disabled={isPending}>
                   Signup
                </Button>
             </form>

@@ -1,12 +1,18 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
+import type { AxiosError } from "axios";
 import { useState } from "react";
 import { z } from "zod";
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "@root/components/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "@root/components/ui";
+import { userAccountUrl } from "@root/constants/routes";
+import type { ResponseData } from "@root/types";
+import { useChangePassword } from "@root/hooks";
+import { errorSchema } from "@root/validations";
 
 const changePasswordFormSchema = z
    .object({
@@ -17,7 +23,8 @@ const changePasswordFormSchema = z
 
 export type ChangePasswordFormType = z.infer<typeof changePasswordFormSchema>;
 
-export default function ChangePasswordForm() {
+export default function ChangePasswordForm({ token }: { token: string }) {
+   const router = useRouter();
    const [showPassword, setShowPassword] = useState(false);
    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -26,7 +33,23 @@ export default function ChangePasswordForm() {
       defaultValues: { password: "", confirmPassword: "" },
    });
 
-   function onChangePassword(values: ChangePasswordFormType) {}
+   function onSuccess(data: ResponseData) {
+      changePasswordForm.reset();
+      toast({ title: data.message });
+      router.push(userAccountUrl);
+   }
+   function onError(error: AxiosError) {
+      const validatedError = errorSchema.safeParse(error.response?.data);
+      if (validatedError.success) toast({ title: validatedError.data.message, variant: "destructive" });
+      else toast({ title: error.message, variant: "destructive" });
+   }
+
+   const { mutate: changePassword, isPending } = useChangePassword({ onError, onSuccess });
+
+   function onChangePassword(values: ChangePasswordFormType) {
+      if (isPending) return;
+      changePassword({ values, token });
+   }
 
    return (
       <Form {...changePasswordForm}>
@@ -83,7 +106,7 @@ export default function ChangePasswordForm() {
                   </FormItem>
                )}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isPending}>
                Update
             </Button>
          </form>

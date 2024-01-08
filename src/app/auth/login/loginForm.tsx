@@ -3,12 +3,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import Link from "next/link";
 import { z } from "zod";
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "@root/components/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "@root/components/ui";
 import { forgotPasswordUrl, signupUrl } from "@root/constants/routes";
+import type { AuthenticateUser } from "@root/types";
+import { errorSchema } from "@root/validations";
+import { nextAuthSignin } from "@root/lib";
+import { useLogin } from "@root/hooks";
 
 const loginFormSchema = z.object({
    email: z.string().min(1, { message: "Required field" }).email({ message: "Please enter a valid e-mail" }),
@@ -25,7 +30,22 @@ export default function LoginForm() {
       defaultValues: { email: "", password: "" },
    });
 
-   function onLogin(values: LoginFormType) {}
+   function onSuccess(data: AuthenticateUser) {
+      loginForm.reset();
+      nextAuthSignin({ message: data.message, token: data.data.token, user: data.data.user });
+   }
+   function onError(error: AxiosError) {
+      const validatedError = errorSchema.safeParse(error.response?.data);
+      if (validatedError.success) toast({ title: validatedError.data.message, variant: "destructive" });
+      else toast({ title: error.message, variant: "destructive" });
+   }
+
+   const { mutate: loginUser, isPending } = useLogin({ onError, onSuccess });
+
+   async function onLogin(values: LoginFormType) {
+      if (isPending) return;
+      loginUser(values);
+   }
 
    return (
       <>
@@ -75,8 +95,8 @@ export default function LoginForm() {
                      </FormItem>
                   )}
                />
-               <Button type="submit" className="w-full">
-                  Signup
+               <Button type="submit" className="w-full" disabled={isPending}>
+                  Login
                </Button>
             </form>
          </Form>

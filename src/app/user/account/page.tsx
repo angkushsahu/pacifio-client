@@ -8,7 +8,7 @@ export const metadata: Metadata = {
    title: "Your Account - Pacifio",
 };
 
-export default function Account() {
+export default async function Account() {
    return (
       <main className="min-h-section center-layout px-5 pt-8 pb-12">
          <section className="mb-10">

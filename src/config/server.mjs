@@ -1,5 +1,5 @@
 import { serverSchema } from "./schema.mjs";
-import { env as clientEnv, formatErrors } from "./client.mjs";
+import clientEnv, { formatErrors } from "./client.mjs";
 
 const _serverEnv = serverSchema.safeParse(process.env);
 

@@ -1,12 +1,18 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
+import type { AxiosError } from "axios";
 import { useState } from "react";
 import { z } from "zod";
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "@root/components/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "@root/components/ui";
+import { loginUrl } from "@root/constants/routes";
+import type { ResponseData } from "@root/types";
+import { errorSchema } from "@root/validations";
+import { useResetPassword } from "@root/hooks";
 
 const resetPasswordFormSchema = z
    .object({
@@ -17,7 +23,8 @@ const resetPasswordFormSchema = z
 
 export type ResetPasswordFormType = z.infer<typeof resetPasswordFormSchema>;
 
-export default function ResetPasswordForm() {
+export default function ResetPasswordForm({ resetId }: { resetId: string }) {
+   const router = useRouter();
    const [showPassword, setShowPassword] = useState(false);
    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -26,7 +33,23 @@ export default function ResetPasswordForm() {
       defaultValues: { password: "", confirmPassword: "" },
    });
 
-   function onResetPassword(values: ResetPasswordFormType) {}
+   function onSuccess(data: ResponseData) {
+      resetPasswordForm.reset();
+      toast({ title: data.message });
+      router.replace(loginUrl);
+   }
+   function onError(error: AxiosError) {
+      const validatedError = errorSchema.safeParse(error.response?.data);
+      if (validatedError.success) toast({ title: validatedError.data.message, variant: "destructive" });
+      else toast({ title: error.message, variant: "destructive" });
+   }
+
+   const { mutate: resetPassword, isPending } = useResetPassword({ onError, onSuccess });
+
+   function onResetPassword(values: ResetPasswordFormType) {
+      if (isPending) return;
+      resetPassword({ ...values, resetId });
+   }
 
    return (
       <Form {...resetPasswordForm}>
@@ -83,7 +106,7 @@ export default function ResetPasswordForm() {
                   </FormItem>
                )}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isPending}>
                Reset
             </Button>
          </form>

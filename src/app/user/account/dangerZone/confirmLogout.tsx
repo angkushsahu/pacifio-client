@@ -1,5 +1,7 @@
 "use client";
 
+import { signOut } from "next-auth/react";
+
 import {
    AlertDialog,
    AlertDialogAction,
@@ -11,9 +13,16 @@ import {
    AlertDialogTitle,
    AlertDialogTrigger,
    Button,
+   toast,
 } from "@root/components/ui";
+import { loginUrl } from "@root/constants/routes";
 
 export default function ConfirmLogout() {
+   function logout() {
+      signOut({ callbackUrl: loginUrl });
+      toast({ title: "User logged out successfully" });
+   }
+
    return (
       <AlertDialog>
          <AlertDialogTrigger asChild>
@@ -28,7 +37,7 @@ export default function ConfirmLogout() {
             </AlertDialogHeader>
             <AlertDialogFooter>
                <AlertDialogCancel>Cancel</AlertDialogCancel>
-               <AlertDialogAction onClick={() => console.log("Logout mutation here please")}>Logout</AlertDialogAction>
+               <AlertDialogAction onClick={logout}>Logout</AlertDialogAction>
             </AlertDialogFooter>
          </AlertDialogContent>
       </AlertDialog>

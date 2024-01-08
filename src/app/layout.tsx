@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import type { PropsWithChildren } from "react";
 import { Toaster } from "@root/components/ui";
+import { getServerSession } from "next-auth";
 import { Inter } from "next/font/google";
 
+import { NextauthProvider, QueryProvider } from "@root/providers";
 import { BaseLayout } from "@root/wrappers";
 import { cn } from "@root/lib";
 
@@ -42,15 +44,21 @@ export const metadata: Metadata = {
    },
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default async function RootLayout({ children }: PropsWithChildren) {
+   const session = await getServerSession();
+
    return (
       <html lang="en">
          <link rel="manifest" href="/site.webmanifest" />
          <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
-            <BaseLayout>
-               <>{children}</>
-               <Toaster />
-            </BaseLayout>
+            <NextauthProvider session={session}>
+               <QueryProvider>
+                  <BaseLayout>
+                     <>{children}</>
+                     <Toaster />
+                  </BaseLayout>
+               </QueryProvider>
+            </NextauthProvider>
          </body>
       </html>
    );
