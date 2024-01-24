@@ -1,7 +1,6 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
-import { AxiosError } from "axios";
 
 import {
    AlertDialog,
@@ -16,28 +15,22 @@ import {
    Button,
    toast,
 } from "@root/components/ui";
-import { signupUrl } from "@root/constants/routes";
-import { errorSchema } from "@root/validations";
-import type { ResponseData } from "@root/types";
+import type { ResponseType } from "@root/validations";
+import { signupUrl } from "@root/constants";
 import { useDeleteUser } from "@root/hooks";
 
 export default function ConfirmAccountDeletion() {
    const { data: session } = useSession();
 
-   function onSuccess(data: ResponseData) {
+   function onSuccess(data: ResponseType) {
       signOut({ callbackUrl: signupUrl });
       toast({ title: data.message });
    }
-   function onError(error: AxiosError) {
-      const validatedError = errorSchema.safeParse(error.response?.data);
-      if (validatedError.success) toast({ title: validatedError.data.message, variant: "destructive" });
-      else toast({ title: error.message, variant: "destructive" });
-   }
-
-   const { mutate: deleteUser, isPending } = useDeleteUser({ onSuccess, onError });
+   const { mutate: deleteUser, isPending } = useDeleteUser({ onSuccess });
 
    function onUserDeletion() {
-      if (session && session.token) deleteUser({ token: session.token });
+      if (isPending) return;
+      if (session?.user && session?.token) deleteUser({ token: session.token });
    }
 
    return (

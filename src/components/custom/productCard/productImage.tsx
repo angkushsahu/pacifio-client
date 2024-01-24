@@ -9,17 +9,13 @@ export interface ProductImageProps {
 }
 
 export default function ProductImage({ productIdx, productTitle, imageUrl }: ProductImageProps) {
-   if (!imageUrl) {
-      return (
-         <div className="h-80 flex items-center justify-center" style={{ backgroundColor: getCardBackgroundColor(productIdx) }}>
-            <p className="font-bold text-2xl text-custom-foreground">NO IMAGE</p>
-         </div>
-      );
-   }
-
    return (
       <div className="h-80 flex items-center justify-center" style={{ backgroundColor: getCardBackgroundColor(productIdx) }}>
-         <Image src={imageUrl} alt={productTitle} width={300} height={300} placeholder="empty" />
+         {imageUrl ? (
+            <Image src={imageUrl} alt={productTitle} width={300} height={300} placeholder="empty" />
+         ) : (
+            <p className="font-bold text-2xl text-custom-foreground">NO IMAGE</p>
+         )}
       </div>
    );
 }

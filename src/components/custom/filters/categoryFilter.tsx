@@ -1,6 +1,6 @@
 "use client";
 
-import { categories as categoryArray } from "@root/constants/categories";
+import { categories as categoryArray } from "@root/constants";
 import { Checkbox, Label } from "@root/components/ui";
 
 export interface CategoryFilterProps {

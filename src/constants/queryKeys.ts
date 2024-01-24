@@ -1,1 +1,11 @@
 export const getUserQueryKey = "user";
+export const getAddressQueryKey = "address";
+export const getAllAddressQueryKey = "all-address";
+export const getProductQueryKey = "product";
+export const getAllProductsQueryKey = "all-products";
+export const getReviewQueryKey = "review";
+export const getAllReviewsQueryKey = "all-reviews";
+export const getShoppingBagQueryKey = "shopping-bag";
+export const getAllProductsForAdminQueryKey = "all-products-admin";
+export const getAllUsersForAdminQueryKey = "all-users-admin";
+export const getHighestRatedProductsQueryKey = "highest-rated-products";

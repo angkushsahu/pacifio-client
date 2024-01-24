@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { homeUrl } from "@root/constants/routes";
+import { homeUrl } from "@root/constants";
 import logo from "@root/assets/logo.png";
 
 export default function Logo() {

@@ -1,51 +1,40 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import type { AxiosError } from "axios";
-import { z } from "zod";
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "@root/components/ui";
-import { userAccountUrl } from "@root/constants/routes";
-import type { AuthenticateUser } from "@root/types";
-import { errorSchema } from "@root/validations";
+import { type UpdateFormType, type AuthenticateUserType, updateFormSchema } from "@root/validations";
+import { getUserQueryKey, userAccountUrl } from "@root/constants";
 import { useUpdateUser } from "@root/hooks";
 
-const updateFormSchema = z.object({
-   name: z.string().min(1, { message: "Required field" }),
-   email: z.string().min(1, { message: "Required field" }).email({ message: "Please enter a valid e-mail" }),
-});
+export interface UpdateFormProps {
+   name: string;
+   email: string;
+   token: string;
+}
 
-export type UpdateFormType = z.infer<typeof updateFormSchema>;
-
-export default function UpdateForm() {
+export default function UpdateForm({ email, name, token }: UpdateFormProps) {
    const router = useRouter();
-   const { data: session, update: updateUserAuthSession } = useSession();
-   if (!session || !session.user || !session.token) return <></>;
+   const queryClient = useQueryClient();
 
    const updateForm = useForm<UpdateFormType>({
       resolver: zodResolver(updateFormSchema),
-      defaultValues: { email: session.user.email, name: session.user.name },
+      defaultValues: { email, name },
    });
 
-   async function onSuccess(data: AuthenticateUser) {
-      if (session?.user) await updateUserAuthSession({ ...session, user: { ...session.user, ...data.data.user } });
+   async function onSuccess(data: AuthenticateUserType) {
       toast({ title: data.message });
+      queryClient.setQueryData([getUserQueryKey], () => data);
       router.push(userAccountUrl);
    }
-   function onError(error: AxiosError) {
-      const validatedError = errorSchema.safeParse(error.response?.data);
-      if (validatedError.success) toast({ title: validatedError.data.message, variant: "destructive" });
-      else toast({ title: error.message, variant: "destructive" });
-   }
-
-   const { mutate: updateUser, isPending } = useUpdateUser({ onError, onSuccess });
+   const { mutate: updateUser, isPending } = useUpdateUser({ onSuccess });
 
    function onUpdate(values: UpdateFormType) {
       if (isPending) return;
-      if (session?.token) updateUser({ token: session.token as string, values });
+      updateUser({ token, values });
    }
 
    return (

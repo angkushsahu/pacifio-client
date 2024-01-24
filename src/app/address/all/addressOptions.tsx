@@ -1,6 +1,7 @@
 "use client";
 
 import { MoreHorizontal, Pencil, Trash } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -17,15 +18,39 @@ import {
    DropdownMenuContent,
    DropdownMenuItem,
    DropdownMenuTrigger,
+   toast,
 } from "@root/components/ui";
-import { baseUpdateAddressUrl } from "@root/constants/routes";
+import type { AllAddressResponseType, ResponseType } from "@root/validations";
+import { baseUpdateAddressUrl, getAllAddressQueryKey } from "@root/constants";
+import { useDeleteAddress } from "@root/hooks";
 
 export interface AddressOptionsProps {
    addressId: string;
+   token: string;
 }
 
-export default function AddressOptions({ addressId }: AddressOptionsProps) {
+export default function AddressOptions({ addressId, token }: AddressOptionsProps) {
+   const queryClient = useQueryClient();
    const [showAlert, setShowAlert] = useState(false);
+
+   function onSuccess(data: ResponseType) {
+      queryClient.setQueryData([getAllAddressQueryKey], function (presentAddresses: AllAddressResponseType) {
+         const { addresses } = presentAddresses.data;
+         const newAddresses = addresses.filter((address) => address.id !== addressId);
+
+         return {
+            ...presentAddresses,
+            data: { addresses: newAddresses, totalAddresses: newAddresses.length },
+         };
+      });
+      toast({ title: data.message });
+   }
+   const { mutate: deleteAddress, isPending } = useDeleteAddress({ onSuccess });
+
+   function onAddressDeletion() {
+      if (isPending) return;
+      deleteAddress({ id: addressId, token });
+   }
 
    return (
       <>
@@ -58,7 +83,9 @@ export default function AddressOptions({ addressId }: AddressOptionsProps) {
                </AlertDialogHeader>
                <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>Delete</AlertDialogAction>
+                  <AlertDialogAction onClick={onAddressDeletion} disabled={isPending}>
+                     Delete
+                  </AlertDialogAction>
                </AlertDialogFooter>
             </AlertDialogContent>
          </AlertDialog>

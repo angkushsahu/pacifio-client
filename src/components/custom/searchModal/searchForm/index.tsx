@@ -4,24 +4,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-import { productsUrl } from "@root/constants/routes";
+import { MIN_PRICE, MAX_PRICE, MIN_RATING, MAX_RATING } from "@root/constants";
+import { type SearchSchemaType, searchSchema } from "@root/validations";
+import { productsUrl } from "@root/constants";
 import SearchFormComponent from "./form";
-
-const MIN_PRICE = 0;
-const MAX_PRICE = 100000;
-const MIN_RATING = 0;
-const MAX_RATING = 5;
-
-const searchSchema = z.object({
-   searchTerm: z.string().min(3, { message: "Minimum three characters required to search" }),
-   categories: z.array(z.string().min(1, { message: "Enter category" })),
-   priceRange: z.tuple([z.coerce.number(), z.coerce.number()]),
-   ratingRange: z.tuple([z.coerce.number(), z.coerce.number()]),
-});
-
-export type SearchSchemaType = z.infer<typeof searchSchema>;
 
 export interface SearchFormProps {
    setOpen: Dispatch<SetStateAction<boolean>>;
@@ -29,6 +16,7 @@ export interface SearchFormProps {
 
 export default function SearchForm({ setOpen }: SearchFormProps) {
    const searchParams = useSearchParams();
+   const router = useRouter();
 
    const initialQuery = searchParams.get("query");
    const initialPriceGte = Number(searchParams.get("price_gte"));
@@ -46,8 +34,6 @@ export default function SearchForm({ setOpen }: SearchFormProps) {
          ratingRange: [initialRatingGte ? initialRatingGte : MIN_RATING, initialRatingLte ? initialRatingLte : MAX_RATING],
       },
    });
-
-   const router = useRouter();
 
    function onSearch(values: SearchSchemaType) {
       const { categories, priceRange, ratingRange, searchTerm } = values;
@@ -77,17 +63,14 @@ export default function SearchForm({ setOpen }: SearchFormProps) {
       else newCategories = [...categories, value];
 
       searchForm.setValue("categories", newCategories);
-      console.log(searchForm.getValues("categories"));
    }
 
    function updatePriceFilter(value: [number, number]) {
       searchForm.setValue("priceRange", value);
-      console.log(searchForm.getValues("priceRange"));
    }
 
    function updateRatingFilter(value: [number, number]) {
       searchForm.setValue("ratingRange", value);
-      console.log(searchForm.getValues("ratingRange"));
    }
 
    return (

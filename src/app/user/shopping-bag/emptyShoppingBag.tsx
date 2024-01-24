@@ -1,8 +1,8 @@
 import { Frown } from "lucide-react";
 import Link from "next/link";
 
-import { homeUrl } from "@root/constants/routes";
 import { Button } from "@root/components/ui";
+import { homeUrl } from "@root/constants";
 
 export default function EmptyShoppingBag() {
    return (

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { createAddressUrl } from "@root/constants/routes";
+import { createAddressUrl } from "@root/constants";
 import ShowAllAddress from "./showAllAddress";
 
 export default function ParentComponent() {

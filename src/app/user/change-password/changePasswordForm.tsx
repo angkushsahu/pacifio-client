@@ -4,24 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
-import type { AxiosError } from "axios";
 import { useState } from "react";
-import { z } from "zod";
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "@root/components/ui";
-import { userAccountUrl } from "@root/constants/routes";
-import type { ResponseData } from "@root/types";
+import { changePasswordFormSchema, type ChangePasswordFormType, type ResponseType } from "@root/validations";
+import { userAccountUrl } from "@root/constants";
 import { useChangePassword } from "@root/hooks";
-import { errorSchema } from "@root/validations";
-
-const changePasswordFormSchema = z
-   .object({
-      password: z.string().min(1, { message: "Required field" }),
-      confirmPassword: z.string().min(1, { message: "Required field" }),
-   })
-   .refine((data) => data.password === data.confirmPassword, { path: ["confirmPassword"], message: "Passwords do not match" });
-
-export type ChangePasswordFormType = z.infer<typeof changePasswordFormSchema>;
 
 export default function ChangePasswordForm({ token }: { token: string }) {
    const router = useRouter();
@@ -33,18 +21,12 @@ export default function ChangePasswordForm({ token }: { token: string }) {
       defaultValues: { password: "", confirmPassword: "" },
    });
 
-   function onSuccess(data: ResponseData) {
+   function onSuccess(response: ResponseType) {
       changePasswordForm.reset();
-      toast({ title: data.message });
+      toast({ title: response.message });
       router.push(userAccountUrl);
    }
-   function onError(error: AxiosError) {
-      const validatedError = errorSchema.safeParse(error.response?.data);
-      if (validatedError.success) toast({ title: validatedError.data.message, variant: "destructive" });
-      else toast({ title: error.message, variant: "destructive" });
-   }
-
-   const { mutate: changePassword, isPending } = useChangePassword({ onError, onSuccess });
+   const { mutate: changePassword, isPending } = useChangePassword({ onSuccess });
 
    function onChangePassword(values: ChangePasswordFormType) {
       if (isPending) return;

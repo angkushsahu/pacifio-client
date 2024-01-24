@@ -1,52 +1,58 @@
 "use client";
 
-import { Trash } from "lucide-react";
 import Image from "next/image";
 
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger, toast } from "@root/components/ui";
-import deleteImage from "@root/lib/deleteImage";
-import logo from "@root/assets/logo.png";
+import { Badge, ContextMenu, ContextMenuContent, ContextMenuTrigger } from "@root/components/ui";
+import type { ProductImageType } from "@root/validations";
+import Loading from "@root/app/admin/(routes)/loading";
+import { useGetProduct } from "@root/hooks";
+import DeleteImage from "./deleteImage";
+import SetDefault from "./setDefault";
 
 export interface ParentComponentProps {
    productId: string;
+   token: string;
 }
 
-export default function ParentComponent({ productId }: ParentComponentProps) {
-   /*
-    * give a border to the image which is set as the default image
-    */
+export interface ChildProps extends ProductImageType {
+   token: string;
+   productId: string;
+}
 
-   async function onDeleteImage(publicId: string) {
-      const res = await deleteImage({ publicId });
-      if (res) toast({ title: "Image deleted successfully" });
-   }
+export default function ParentComponent({ productId, token }: ParentComponentProps) {
+   const { data: response } = useGetProduct({ enabled: true, id: productId });
+   if (!response) return <Loading />;
+   const { product } = response.data;
+
+   const matchDefaultImage = ({ publicUrl, secureUrl }: ProductImageType) =>
+      publicUrl === product.defaultImage.publicUrl && secureUrl === product.defaultImage.secureUrl;
 
    return (
       <section className="pt-4">
          <h1 className="font-semibold text-3xl">Select Default Image</h1>
          <p className="mb-8 mt-2">Right click or long press for more options</p>
-         <div className="mb-8 flex flex-wrap gap-6">
-            {Array.from({ length: 5 }).map((_, idx) => (
-               <ContextMenu key={idx}>
-                  <ContextMenuTrigger>
-                     <Image src={logo} alt="Random image" width={260} height={260} />
-                  </ContextMenuTrigger>
-                  <ContextMenuContent>
-                     <ContextMenuItem inset className="cursor-pointer py-2 px-4">
-                        Set as default
-                     </ContextMenuItem>
-                     <ContextMenuItem
-                        inset
-                        className="cursor-pointer py-2 px-4 text-destructive"
-                        onClick={() => onDeleteImage("")} // fill the empty string here with public_id
-                     >
-                        <Trash className="mr-2 w-4 h-4" />
-                        Delete
-                     </ContextMenuItem>
-                  </ContextMenuContent>
-               </ContextMenu>
-            ))}
-         </div>
+         {!product.images.length ? (
+            <p className="text-center text-muted-foreground">There are no images currently</p>
+         ) : (
+            <div className="mb-8 flex flex-wrap gap-6">
+               {product.images.map(({ publicUrl, secureUrl }) => (
+                  <ContextMenu key={publicUrl}>
+                     <ContextMenuTrigger className="relative">
+                        <Image src={secureUrl} alt={publicUrl} width={260} height={260} />
+                        {matchDefaultImage({ publicUrl, secureUrl }) ? (
+                           <Badge className="absolute top-2 right-2 text-black font-semibold bg-white shadow-lg">
+                              Default Image
+                           </Badge>
+                        ) : null}
+                     </ContextMenuTrigger>
+                     <ContextMenuContent>
+                        <SetDefault publicUrl={publicUrl} secureUrl={secureUrl} token={token} productId={productId} />
+                        <DeleteImage publicUrl={publicUrl} secureUrl={secureUrl} token={token} productId={productId} />
+                     </ContextMenuContent>
+                  </ContextMenu>
+               ))}
+            </div>
+         )}
       </section>
    );
 }

@@ -12,8 +12,8 @@ export interface ServerPageProps {
    };
 }
 
-export type { CategoryType } from "@root/constants/categories";
+export type { CategoryType } from "@root/constants";
 export type OrderStatusType = "processing" | "shipped" | "delivered";
 export type PaymentStatusType = "paid" | "not-paid";
-export type UserRoleType = "user" | "admin";
+export type UserRoleType = "user" | "admin" | "super-admin";
 export type ProductStockType = "empty" | "non-empty";

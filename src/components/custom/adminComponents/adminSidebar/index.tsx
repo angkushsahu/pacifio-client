@@ -3,8 +3,7 @@
 import { Menu } from "lucide-react";
 import { useState } from "react";
 
-import { Sheet, SheetContent, SheetTrigger } from "@root/components/ui";
-import { Button } from "@root/components/ui";
+import { Button, Sheet, SheetContent, SheetTrigger } from "@root/components/ui";
 import Sidebar from "./sidebar";
 
 export default function AdminSidebar() {

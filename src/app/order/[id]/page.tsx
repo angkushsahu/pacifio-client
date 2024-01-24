@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Orders } from "@root/components/custom";
-import { homeUrl } from "@root/constants/routes";
+import { homeUrl } from "@root/constants";
 import { Button } from "@root/components/ui";
 import OrderInfo from "./orderInfo";
 
@@ -17,7 +17,7 @@ const orderSummary = {
       location: "In front of SBI e-corner New Delhi Hawaii Japan",
       city: "Jammu and Kashmir",
       state: "Arunachal Pradesh",
-      pincode: 785001,
+      pincode: "785001",
       country: "India",
    },
    order: {

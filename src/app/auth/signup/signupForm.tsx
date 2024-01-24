@@ -3,28 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { AxiosError } from "axios";
 import { useState } from "react";
 import Link from "next/link";
-import { z } from "zod";
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "@root/components/ui";
-import type { AuthenticateUser } from "@root/types";
-import { loginUrl } from "@root/constants/routes";
-import { errorSchema } from "@root/validations";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "@root/components/ui";
+import { type SignupFormType, type AuthenticateUserType, signupFormSchema } from "@root/validations";
+import { loginUrl } from "@root/constants";
 import { nextAuthSignin } from "@root/lib";
 import { useSignup } from "@root/hooks";
-
-const signupFormSchema = z
-   .object({
-      name: z.string().min(1, { message: "Required field" }),
-      email: z.string().min(1, { message: "Required field" }).email({ message: "Please enter a valid e-mail" }),
-      password: z.string().min(1, { message: "Required field" }),
-      confirmPassword: z.string().min(1, { message: "Required field" }),
-   })
-   .refine((data) => data.password === data.confirmPassword, { path: ["confirmPassword"], message: "Passwords do not match" });
-
-export type SignupFormType = z.infer<typeof signupFormSchema>;
 
 export default function SignupForm() {
    const [showPassword, setShowPassword] = useState(false);
@@ -35,17 +21,12 @@ export default function SignupForm() {
       defaultValues: { email: "", name: "", password: "", confirmPassword: "" },
    });
 
-   function onSuccess(data: AuthenticateUser) {
+   function onSuccess(response: AuthenticateUserType) {
       signupForm.reset();
-      nextAuthSignin({ message: data.message, token: data.data.token, user: data.data.user });
+      const { data, message } = response;
+      nextAuthSignin({ message, token: data.token, user: data.user });
    }
-   function onError(error: AxiosError) {
-      const validatedError = errorSchema.safeParse(error.response?.data);
-      if (validatedError.success) toast({ title: validatedError.data.message, variant: "destructive" });
-      else toast({ title: error.message, variant: "destructive" });
-   }
-
-   const { mutate: signupUser, isPending } = useSignup({ onError, onSuccess });
+   const { mutate: signupUser, isPending } = useSignup({ onSuccess });
 
    function onSignup(values: SignupFormType) {
       if (isPending) return;

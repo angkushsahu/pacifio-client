@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { formatNumber, getCardBackgroundColor, shortenSentence } from "@root/lib";
-import { baseProductUrl } from "@root/constants/routes";
+import { baseProductUrl } from "@root/constants";
 import ConfirmDeletion from "./confirmDeletion";
 import UpdateQuantity from "./updateQuantity";
 
@@ -10,16 +10,17 @@ export interface ShoppingBagItemProps {
    productId: string;
    productIdx: number;
    image: string;
-   title: string;
+   name: string;
    price: number;
    stock: number;
    quantity: number;
    totalPricePerItem: number;
+   token: string;
 }
 
 export default function ShoppingBagItem(props: ShoppingBagItemProps) {
-   const { productId, productIdx, image, price, quantity, stock, title, totalPricePerItem } = props;
-   let { isLong, shortenedString } = shortenSentence({ maxCharacters: 40, sentence: title });
+   const { productId, productIdx, image, price, quantity, stock, name, token, totalPricePerItem } = props;
+   let { isLong, shortenedString } = shortenSentence({ maxCharacters: 40, sentence: name });
    shortenedString += isLong ? " ...." : "";
 
    const linkToProduct = `${baseProductUrl}/${productId}`;
@@ -33,7 +34,7 @@ export default function ShoppingBagItem(props: ShoppingBagItemProps) {
                style={{ backgroundColor: getCardBackgroundColor(productIdx) }}
             >
                {image ? (
-                  <Image src={image} alt={title} width="200" height="160" />
+                  <Image src={image} alt={name} width="200" height="160" />
                ) : (
                   <p className="font-bold text-2xl text-custom-foreground">NO IMAGE</p>
                )}
@@ -47,13 +48,13 @@ export default function ShoppingBagItem(props: ShoppingBagItemProps) {
                   {shortenedString}
                </Link>
                <p className="mt-2">₹ {formatNumber(price)} per item</p>
-               <UpdateQuantity quantity={quantity} stock={stock} />
+               <UpdateQuantity productId={productId} quantity={quantity} stock={stock} token={token} />
             </div>
             {/* product name, price per item, quantity -- end */}
             {/* totalPrice and delete item -- start */}
             <div className="flex flex-col justify-between">
                <p className="text-xl font-semibold mb-2">₹ {formatNumber(totalPricePerItem)}</p>
-               <ConfirmDeletion />
+               <ConfirmDeletion token={token} productId={productId} />
             </div>
          </section>
          {/* totalPrice and delete item -- end */}

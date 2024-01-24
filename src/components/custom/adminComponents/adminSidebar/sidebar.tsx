@@ -5,7 +5,7 @@ import { ShieldCheck } from "lucide-react";
 import Link from "next/link";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@root/components/ui";
-import { adminDashboardUrl, adminTransactionsUrl } from "@root/constants/routes";
+import { adminDashboardUrl, adminTransactionsUrl } from "@root/constants";
 import adminNavigation from "./adminNavigationArray";
 import { cn } from "@root/lib";
 

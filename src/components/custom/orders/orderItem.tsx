@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { formatNumber, getCardBackgroundColor, shortenSentence } from "@root/lib";
-import { baseProductUrl } from "@root/constants/routes";
+import { baseProductUrl } from "@root/constants";
 
 export interface OrderItemProps {
    productId: string;

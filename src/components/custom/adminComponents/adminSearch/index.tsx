@@ -1,3 +1,5 @@
+"use client";
+
 import type { Dispatch, SetStateAction } from "react";
 
 import { Input } from "@root/components/ui";
@@ -11,7 +13,7 @@ export interface AdminSearchProps {
 export default function AdminSearch({ setValue, value, placeholder }: AdminSearchProps) {
    return (
       <div className="my-5">
-         <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder={placeholder || "Search ...."} />
+         <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder={placeholder || "Search ...."} autoFocus />
       </div>
    );
 }

@@ -3,7 +3,7 @@
 import { Frown } from "lucide-react";
 import Link from "next/link";
 
-import { allOrdersUrl, contactUrl } from "@root/constants/routes";
+import { allOrdersUrl, contactUrl } from "@root/constants";
 import type { ErrorProps } from "@root/types";
 
 export default function OrderSuccessError({ error }: ErrorProps) {

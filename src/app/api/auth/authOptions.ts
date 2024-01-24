@@ -1,9 +1,9 @@
 import CredentialsProvider, { type CredentialInput } from "next-auth/providers/credentials";
 import type { AuthOptions, Awaitable, User } from "next-auth";
 
-import type { IUser, UserSession } from "@root/types";
-import { loginUrl } from "@root/constants/routes";
-import env from "@root/config/server.mjs";
+import type { UserType } from "@root/validations";
+import type { UserSession } from "@root/types";
+import { loginUrl } from "@root/constants";
 
 const authOptions: AuthOptions = {
    pages: {
@@ -11,17 +11,17 @@ const authOptions: AuthOptions = {
    },
    session: {
       strategy: "jwt",
-      maxAge: env.COOKIE_AGE,
+      maxAge: Number(process.env.COOKIE_AGE),
    },
-   secret: env.NEXTAUTH_SECRET,
-   debug: env.NODE_ENV === "development",
+   secret: process.env.NEXTAUTH_SECRET,
+   debug: process.env.NODE_ENV === "development",
    providers: [
       CredentialsProvider({
          name: "credentials",
          credentials: {} as Record<string, CredentialInput>,
          async authorize(credentials) {
             if (!credentials) throw new Error("Invalid credentials");
-            const { name, email, createdAt, id, role, token } = credentials as IUser & { token: string };
+            const { name, email, createdAt, id, role, token } = credentials as UserType & { token: string };
             const user = { name, email, createdAt, id, role };
             return { user, token } as unknown as Awaitable<User>;
          },
@@ -34,9 +34,8 @@ const authOptions: AuthOptions = {
             token = { ...token, user: modifiedUser.user, token: modifiedUser.token };
          }
          if (trigger === "update") {
-            token.user = session.user as IUser;
+            token.user = session.user as UserType;
             token.token = session.token as string;
-            console.log(token);
          }
          return token;
       },

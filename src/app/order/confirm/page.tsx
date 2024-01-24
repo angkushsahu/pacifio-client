@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { paymentUrl, shippingUrl, shoppingBagUrl } from "@root/constants/routes";
+import { paymentUrl, shippingUrl, shoppingBagUrl } from "@root/constants";
 import { Orders } from "@root/components/custom";
 import type { ServerPageProps } from "@root/types";
 import { Button } from "@root/components/ui";

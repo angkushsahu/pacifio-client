@@ -1,34 +1,40 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "@root/components/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "@root/components/ui";
+import { type AddressFormType, type AddressResponseType, addressFormSchema } from "@root/validations";
+import { useCreateAddress, useUpdateAddress } from "@root/hooks";
+import { allAddressUrl } from "@root/constants";
 
-const addressFormSchema = z.object({
-   contactNumber: z.string().min(9, { message: "Enter a valid phone number" }),
-   location: z.string().min(1, { message: "Required field" }),
-   city: z.string().min(1, { message: "Required field" }),
-   state: z.string().min(20, { message: "Required field" }),
-   pincode: z.coerce.number().min(1, { message: "Required field" }),
-   country: z.string().min(1, { message: "Required field" }),
-});
+export type AddressFormProps = AddressFormType & { isCreationRoute?: boolean; id?: string; token: string };
 
-export type AddressFormType = z.infer<typeof addressFormSchema>;
-
-export default function AddressForm(props: AddressFormType) {
-   const searchParams = useSearchParams();
-   console.log(searchParams.get("shipping"));
-
+export default function AddressForm(props: AddressFormProps) {
+   const router = useRouter();
    const { contactNumber, country, city, location, pincode, state } = props;
+
    const addressForm = useForm<AddressFormType>({
       resolver: zodResolver(addressFormSchema),
       defaultValues: { contactNumber, country, city, location, pincode, state },
    });
 
-   function onAddressEdit(values: AddressFormType) {}
+   function onSuccess(data: AddressResponseType) {
+      if (props.isCreationRoute) addressForm.reset();
+      toast({ title: data.message });
+      router.push(allAddressUrl);
+   }
+   const { mutate: createAddress, isPending: creationPending } = useCreateAddress({ onSuccess });
+   const { mutate: updateAddress, isPending: updationPending } = useUpdateAddress({ onSuccess });
+
+   function onAddressEdit(values: AddressFormType) {
+      if (creationPending || updationPending) return;
+
+      const { token } = props;
+      if (props.isCreationRoute) createAddress({ values, token });
+      else if (props.id) updateAddress({ values, token, id: props.id });
+   }
 
    return (
       <Form {...addressForm}>
@@ -111,7 +117,7 @@ export default function AddressForm(props: AddressFormType) {
                   </FormItem>
                )}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={creationPending || updationPending}>
                Submit
             </Button>
          </form>

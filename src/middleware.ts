@@ -1,11 +1,20 @@
 import { withAuth, type NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
+import type { GetUserType } from "./validations";
 import { signupUrl } from "./constants/routes";
 
 export default withAuth(
-   function middleware(request: NextRequestWithAuth) {
-      const user = request.nextauth.token?.user;
+   async function middleware(request: NextRequestWithAuth) {
+      const token = request.nextauth.token?.token;
+      if (!token) return NextResponse.rewrite(new URL(signupUrl, request.url));
+
+      const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/user`, {
+         headers: { Authorization: `Bearer ${token}` },
+      });
+      const responseJson: GetUserType = await apiResponse.json();
+
+      const { user } = responseJson.data;
       if (!user) return NextResponse.rewrite(new URL(signupUrl, request.url));
 
       const { pathname } = request.nextUrl;

@@ -1,19 +1,25 @@
+import type { DefaultSession } from "next-auth";
 import Link from "next/link";
 
 import { authenticatedItems, unAuthenticatedLinks } from "./linkArrays";
-import { shoppingBagUrl } from "@root/constants/routes";
+import { adminDashboardUrl, shoppingBagUrl } from "@root/constants";
+import type { UserType } from "@root/validations";
+import ShoppingBagPill from "./shoppingBagPill";
 import { Button } from "@root/components/ui";
 
-export default function NavLinks() {
-   const shoppingBagItems = 10;
-   const isAuth = !false;
+export interface NavLinksProps {
+   token: string | null | undefined;
+   user: (UserType & DefaultSession["user"]) | null | undefined;
+}
 
-   const navItems = isAuth ? authenticatedItems : unAuthenticatedLinks;
+export default function NavLinks({ token, user }: NavLinksProps) {
+   const navItems = token && user ? authenticatedItems : unAuthenticatedLinks;
 
    return (
       <nav className="hidden md:flex items-center gap-x-8">
          {navItems.map((navItem) => {
             const isShoppingBagLink = navItem.link === shoppingBagUrl;
+            if (navItem.link === adminDashboardUrl && user?.role === "user") return null;
             return (
                <Link key={navItem.title} href={navItem.link} title={`Go to your ${navItem.title.toLowerCase()}`}>
                   <Button
@@ -22,11 +28,7 @@ export default function NavLinks() {
                      className="rounded-full relative border-none bg-custom hover:bg-custom-hover"
                   >
                      <navItem.Icon className="w-6 h-6" />
-                     {isShoppingBagLink && shoppingBagItems > 0 ? (
-                        <div className="bg-neutral-300 font-bold p-1 text-xs rounded-full border-2 border-white absolute w-7 h-7 flex items-center justify-center -top-3 -right-3">
-                           10
-                        </div>
-                     ) : null}
+                     {isShoppingBagLink && token ? <ShoppingBagPill token={token} /> : null}
                   </Button>
                </Link>
             );

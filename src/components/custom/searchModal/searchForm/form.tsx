@@ -2,9 +2,9 @@ import { Search, SlidersHorizontal } from "lucide-react";
 import { type UseFormReturn } from "react-hook-form";
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Label } from "@root/components/ui";
-import { CategoryFilter, PriceFilter, RatingFilter } from "../..";
+import { CategoryFilter, PriceFilter, RatingFilter } from "../../index";
 import { DialogFooter } from "@root/components/ui/dialog";
-import { SearchSchemaType } from ".";
+import type { SearchSchemaType } from "@root/validations";
 
 export interface SearchFormComponentProps {
    searchForm: UseFormReturn<SearchSchemaType, any, undefined>;

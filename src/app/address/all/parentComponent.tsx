@@ -1,15 +1,26 @@
+"use client";
+
+import { useGetAllAddress } from "@root/hooks";
 import ShowAllAddress from "./showAllAddress";
 import EmptyAddress from "./emptyAddress";
+import Loading from "@root/app/loading";
 
-export default function ParentComponent() {
-   const isAddressEmpty = false;
+export interface ParentComponentProps {
+   userId: string;
+   token: string;
+}
 
-   if (isAddressEmpty) return <EmptyAddress />;
+export default function ParentComponent({ token, userId }: ParentComponentProps) {
+   const { data: response } = useGetAllAddress({ enabled: !!userId, token });
+   if (!response?.data) return <Loading />;
+   const { data } = response;
+
+   if (data.totalAddresses <= 0) return <EmptyAddress />;
 
    return (
       <main className="min-h-section center-layout px-5 pt-8 pb-12">
          <h1 className="font-semibold text-3xl mb-6">Saved addresses</h1>
-         <ShowAllAddress />
+         <ShowAllAddress addresses={data.addresses} token={token} />
       </main>
    );
 }

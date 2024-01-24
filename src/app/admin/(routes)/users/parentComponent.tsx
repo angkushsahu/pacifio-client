@@ -1,43 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { AdminSearch, AdminTable } from "@root/components/custom";
+import { useGetAllUsersForAdmin } from "@root/hooks";
 import type { UserRoleType } from "@root/types";
 import UserActions from "./actions";
+import Loading from "../loading";
 
 const headContents = ["Name", "E-mail", "Role"];
 
-const bodyContents = [
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-   ["Abra ca Dabra Abra", "abracadabra11980@gmail.com", "Admin"],
-];
-
 export interface ParentComponentProps {
    role: UserRoleType;
+   token: string;
 }
 
-export default function ParentComponent({ role }: ParentComponentProps) {
+export default function ParentComponent({ role, token }: ParentComponentProps) {
    const [value, setValue] = useState("");
-   const userRole = role[0].toUpperCase() + role.substring(1);
+   const [page, setPage] = useState(1);
+   const [deferredValue, setDeferredValue] = useState("");
+
+   const userRole = role === "user" ? "Regular" : role[0].toUpperCase() + role.substring(1);
+
+   useEffect(() => {
+      const timeout = setTimeout(() => {
+         setDeferredValue(value);
+      }, 750);
+
+      return () => clearTimeout(timeout);
+   }, [value]);
+
+   const { data: response } = useGetAllUsersForAdmin({
+      pageNumber: page,
+      token,
+      role,
+      query: deferredValue,
+   });
+   if (!response) return <Loading />;
+
+   const { users } = response.data;
+
+   const { numberOfFetchedUsers, totalUsers } = response.data;
+   const totalPages = numberOfFetchedUsers && totalUsers ? Math.ceil(totalUsers / numberOfFetchedUsers) : 0;
+   const currentPage = numberOfFetchedUsers && totalUsers ? page : 0;
+
    return (
       <div>
          <h1 className="font-semibold text-3xl">{userRole} Users</h1>
          <AdminSearch setValue={setValue} value={value} placeholder={`Search ${userRole} Users ....`} />
          <AdminTable
-            bodyElements={bodyContents}
+            bodyElements={users as unknown as Array<Record<string, string | number>>}
             headElements={headContents}
-            currentPage={1}
-            totalPages={5}
+            currentPage={currentPage}
+            totalPages={totalPages}
             Actions={UserActions}
+            setPage={setPage}
+            parentPage="Users"
+            token={token}
          />
       </div>
    );

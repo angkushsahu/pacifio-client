@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { categories } from "@root/constants/categories";
+import { categories } from "@root/constants";
 
 export default function Categories() {
    return (

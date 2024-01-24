@@ -8,7 +8,7 @@ const orderSummary = {
       location: "In front of SBI e-corner New Delhi Hawaii Japan",
       city: "Jammu and Kashmir",
       state: "Arunachal Pradesh",
-      pincode: 785001,
+      pincode: "785001",
       country: "India",
    },
    order: {

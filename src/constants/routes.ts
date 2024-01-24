@@ -21,15 +21,15 @@ export const adminDashboardUrl = "/admin/dashboard";
 export const adminTransactionsUrl = "/admin/transactions";
 export const baseAdminViewUserUrl = "/admin/user";
 export const adminUserRoleAdminUrl = "/admin/users?role=admin";
-export const adminUserRoleRegularUrl = "/admin/users?role=regular";
+export const adminUserRoleRegularUrl = "/admin/users?role=user";
 export const baseAdminViewOrderUrl = "/admin/order";
 export const adminShippedOrdersUrl = "/admin/orders?status=shipped";
 export const adminDeliveredOrdersUrl = "/admin/orders?status=delivered";
 export const adminProcessingOrdersUrl = "/admin/orders?status=processing";
 export const baseAdminUpdateProductUrl = "/admin/product/update";
 export const adminCreateProductUrl = "/admin/product/create";
-export const adminUploadProductImageUrl = "/admin/product/image-upload";
-export const adminSelectDefaultProductImageUrl = "/admin/product/select-default-image";
+export const baseAdminUploadProductImageUrl = "/admin/product/image-upload";
+export const baseAdminSelectDefaultProductImageUrl = "/admin/product/select-default-image";
 export const adminOutOfStockProductsUrl = "/admin/products?stock=empty";
 export const adminInStockProductsUrl = "/admin/products?stock=non-empty";
 

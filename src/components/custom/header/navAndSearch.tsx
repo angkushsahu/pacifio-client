@@ -5,8 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { authenticatedItems, commonNavItems, unAuthenticatedLinks } from "./linkArrays";
 import SearchModal from "../searchModal";
 
-export default function NavAndSearch() {
-   const isAuth = !false;
+export default function NavAndSearch({ isAuth }: { isAuth: boolean }) {
    const navItems = [...commonNavItems, ...(isAuth ? authenticatedItems : unAuthenticatedLinks)];
 
    return (

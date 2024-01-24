@@ -1,12 +1,13 @@
+"use client";
+
 import { signIn } from "next-auth/react";
 
-import { homeUrl } from "@root/constants/routes";
-import { userSchema } from "@root/validations";
+import { type UserType, userSchema } from "@root/validations";
+import { homeUrl } from "@root/constants";
 import { toast } from "@root/components/ui";
-import type { IUser } from "@root/types";
 
 export interface NextAuthSigninArgs {
-   user: IUser;
+   user: UserType;
    token: string;
    message: string;
 }

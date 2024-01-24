@@ -18,7 +18,7 @@ import {
    DropdownMenuItem,
    DropdownMenuTrigger,
 } from "@root/components/ui";
-import { baseUpdateAddressUrl } from "@root/constants/routes";
+import { baseUpdateAddressUrl } from "@root/constants";
 
 export interface AddressOptionsProps {
    addressId: string;

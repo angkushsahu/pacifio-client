@@ -15,10 +15,10 @@ import {
    Button,
    toast,
 } from "@root/components/ui";
-import { loginUrl } from "@root/constants/routes";
+import { loginUrl } from "@root/constants";
 
 export default function ConfirmLogout() {
-   function logout() {
+   function onLogout() {
       signOut({ callbackUrl: loginUrl });
       toast({ title: "User logged out successfully" });
    }
@@ -37,7 +37,7 @@ export default function ConfirmLogout() {
             </AlertDialogHeader>
             <AlertDialogFooter>
                <AlertDialogCancel>Cancel</AlertDialogCancel>
-               <AlertDialogAction onClick={logout}>Logout</AlertDialogAction>
+               <AlertDialogAction onClick={onLogout}>Logout</AlertDialogAction>
             </AlertDialogFooter>
          </AlertDialogContent>
       </AlertDialog>

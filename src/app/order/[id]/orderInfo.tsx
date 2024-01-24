@@ -7,7 +7,7 @@ export interface OrderInfoProps {
       city: string;
       state: string;
       country: string;
-      pincode: number;
+      pincode: string;
    };
    order: {
       orderedOn: string;

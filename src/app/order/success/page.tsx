@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import backgroundImage from "@root/assets/orderSuccessBackground.svg";
 import successImage from "@root/assets/successImage.svg";
-import { homeUrl } from "@root/constants/routes";
+import { homeUrl } from "@root/constants";
 import { Button } from "@root/components/ui";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 import type { ServerPageProps } from "@root/types";
 
 export interface GetMetadataParams {
-   searchParams: ServerPageProps["searchParams"];
+   searchParams: ServerPageProps["searchParams"] | null;
    searchParamsKey: string;
    backupTitle: string;
    prefix?: string;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { homeUrl } from "@root/constants/routes";
+import { homeUrl } from "@root/constants";
 import { Button } from "@root/components/ui";
 import EmptyOrders from "./emptyOrders";
 import OrderBox from "./orderBox";

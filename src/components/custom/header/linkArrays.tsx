@@ -8,7 +8,7 @@ import {
    signupUrl,
    shoppingBagUrl,
    userAccountUrl,
-} from "@root/constants/routes";
+} from "@root/constants";
 
 export const commonNavItems = [
    { Icon: Home, title: "HOME", link: homeUrl },

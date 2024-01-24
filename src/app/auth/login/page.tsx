@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
 
 import authOptions from "@root/app/api/auth/authOptions";
-import { homeUrl } from "@root/constants/routes";
+import { homeUrl } from "@root/constants";
 import LoginForm from "./loginForm";
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function Login() {
    const session = await getServerSession(authOptions);
-   if (session && session.user && session.token) redirect(homeUrl, RedirectType.replace);
+   if (session?.user && session?.token) redirect(homeUrl, RedirectType.replace);
 
    return (
       <main className="min-h-section max-w-xl mx-auto px-5 pt-8 pb-12 flex flex-col justify-center">

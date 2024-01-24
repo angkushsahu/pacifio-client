@@ -1,14 +1,7 @@
 import { BookUser, MessageSquareText, Package, ShieldAlert, ShoppingCart, SquareUser } from "lucide-react";
 import Link from "next/link";
 
-import {
-   allAddressUrl,
-   allOrdersUrl,
-   contactUrl,
-   homeUrl,
-   userAccountUpdateUrl,
-   userPasswordUpdateUrl,
-} from "@root/constants/routes";
+import { allAddressUrl, allOrdersUrl, contactUrl, homeUrl, userAccountUpdateUrl, userPasswordUpdateUrl } from "@root/constants";
 
 const quickLinks = [
    {

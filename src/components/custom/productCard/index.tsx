@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import { formatNumber, shortenSentence } from "@root/lib";
+import ProductStockBadge from "../productStockBadge";
 import ProductImage from "./productImage";
-import { ProductStockBadge } from "..";
 
 export interface ProductCardProps {
    productId: string;

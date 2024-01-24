@@ -1,5 +1,5 @@
-import { aboutUrl, allOrdersUrl, contactUrl, productsUrl, shoppingBagUrl, userAccountUrl } from "@root/constants/routes";
-import { categories } from "@root/constants/categories";
+import { aboutUrl, allOrdersUrl, contactUrl, productsUrl, shoppingBagUrl, userAccountUrl } from "@root/constants";
+import { categories } from "@root/constants";
 
 export const companyLinks = [
    { title: "About", link: aboutUrl },

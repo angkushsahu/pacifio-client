@@ -1,6 +1,6 @@
 import { SelectLabel, SelectTrigger, SelectValue, Separator } from "@root/components/ui";
 import { Select, SelectContent, SelectGroup, SelectItem } from "@root/components/ui";
-import { type CategoryType, categories } from "@root/constants/categories";
+import { type CategoryType, categories } from "@root/constants";
 
 export interface SelectCategoryProps {
    setCategory: (value: CategoryType) => void;

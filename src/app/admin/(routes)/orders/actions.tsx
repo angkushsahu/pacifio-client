@@ -2,7 +2,7 @@ import { MoreHorizontal, Package } from "lucide-react";
 import Link from "next/link";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@root/components/ui";
-import { baseAdminViewOrderUrl } from "@root/constants/routes";
+import { baseAdminViewOrderUrl } from "@root/constants";
 
 export default function OrderActions({ id }: { id: string }) {
    return (

@@ -1,63 +1,76 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { z } from "zod";
 
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@root/components/ui";
-import { Button, Input, Textarea } from "@root/components/ui";
-import type { CategoryType } from "@root/types";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, toast } from "@root/components/ui";
+import { createProductSchema, type CreateProductType, type ProductResponseType } from "@root/validations";
+import { baseAdminUploadProductImageUrl, getProductQueryKey } from "@root/constants";
 import SelectCategory from "./(product-creation)/create/selectCategory";
-
-const createProductSchema = z.object({
-   name: z.string().min(5, { message: "Minimum 5 characters" }),
-   category: z.enum(["mouse", "cooling-pad", "mouse-pad", "keyboard", "headset", ""]),
-   price: z.coerce.number().gte(1, { message: "Choose a valid price" }),
-   stock: z.coerce.number().gte(1, { message: "Choose a valid stock" }),
-   description: z.string().min(1, { message: "Required Field" }),
-});
-
-export type CreateProductType = z.infer<typeof createProductSchema>;
+import { useCreateProduct, useUpdateProduct } from "@root/hooks";
+import { Button, Input, Textarea } from "@root/components/ui";
+import { useQueryClient } from "@tanstack/react-query";
+import type { CategoryType } from "@root/types";
 
 export interface ProductInfoProps extends CreateProductType {
    isCreateRoute?: true;
+   productId?: string;
+   token: string;
 }
 
-export default function ProductInfo({ category, description, name, price, stock, isCreateRoute }: ProductInfoProps) {
-   const createProductForm = useForm<CreateProductType>({
+export default function ProductInfo(props: ProductInfoProps) {
+   const queryClient = useQueryClient();
+   const router = useRouter();
+   const { category, description, name, price, stock, isCreateRoute, token, productId } = props;
+
+   const productForm = useForm<CreateProductType>({
       resolver: zodResolver(createProductSchema),
       defaultValues: { category, description, name, price, stock },
    });
 
-   function onProductCreation(values: CreateProductType) {
+   function onSuccess(response: ProductResponseType) {
+      toast({ title: response.message });
+      if (isCreateRoute) {
+         productForm.reset();
+         router.push(`${baseAdminUploadProductImageUrl}/${response.data.product.id}`);
+      } else queryClient.setQueryData([getProductQueryKey, response.data.product.id], () => response);
+   }
+   const { mutate: createProduct, isPending: creationPending } = useCreateProduct({ onSuccess });
+   const { mutate: updateProduct, isPending: updationPending } = useUpdateProduct({ onSuccess });
+
+   function onProductEdit(values: CreateProductType) {
+      if (creationPending || updationPending) return;
       if (!values.category) {
-         createProductForm.setError("category", { message: "Required field" });
+         productForm.setError("category", { message: "Required field" });
          return;
       }
-      console.log(values);
+
+      if (isCreateRoute) createProduct({ values, token });
+      else if (productId) updateProduct({ values, token, id: productId });
    }
 
    function setCategoryField(value: CategoryType) {
-      createProductForm.setValue("category", value);
+      productForm.setValue("category", value);
    }
 
    useEffect(
       function () {
-         if (createProductForm.formState.touchedFields.category && !createProductForm.getValues("category")) {
-            createProductForm.setError("category", { message: "Required field" });
-         } else if (createProductForm.getValues("category")) {
-            createProductForm.clearErrors("category");
+         if (productForm.formState.touchedFields.category && !productForm.getValues("category")) {
+            productForm.setError("category", { message: "Required field" });
+         } else if (productForm.getValues("category")) {
+            productForm.clearErrors("category");
          }
       },
-      [createProductForm.watch("category")]
+      [productForm.watch("category")]
    );
 
    return (
-      <Form {...createProductForm}>
-         <form onSubmit={createProductForm.handleSubmit(onProductCreation)} className="space-y-5">
+      <Form {...productForm}>
+         <form onSubmit={productForm.handleSubmit(onProductEdit)} className="space-y-5">
             <FormField
-               control={createProductForm.control}
+               control={productForm.control}
                name="name"
                render={({ field }) => (
                   <FormItem>
@@ -70,7 +83,7 @@ export default function ProductInfo({ category, description, name, price, stock,
                )}
             />
             <FormField
-               control={createProductForm.control}
+               control={productForm.control}
                name="category"
                render={() => (
                   <FormItem>
@@ -83,7 +96,7 @@ export default function ProductInfo({ category, description, name, price, stock,
                )}
             />
             <FormField
-               control={createProductForm.control}
+               control={productForm.control}
                name="price"
                render={({ field }) => (
                   <FormItem>
@@ -99,7 +112,7 @@ export default function ProductInfo({ category, description, name, price, stock,
                )}
             />
             <FormField
-               control={createProductForm.control}
+               control={productForm.control}
                name="stock"
                render={({ field }) => (
                   <FormItem>
@@ -112,7 +125,7 @@ export default function ProductInfo({ category, description, name, price, stock,
                )}
             />
             <FormField
-               control={createProductForm.control}
+               control={productForm.control}
                name="description"
                render={({ field }) => (
                   <FormItem>
@@ -124,7 +137,7 @@ export default function ProductInfo({ category, description, name, price, stock,
                   </FormItem>
                )}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={creationPending || updationPending}>
                {isCreateRoute ? "Create" : "Update"} Product
             </Button>
          </form>

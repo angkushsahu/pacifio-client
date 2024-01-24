@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-import { confirmOrderUrl, createAddressUrl } from "@root/constants/routes";
+import { confirmOrderUrl, createAddressUrl } from "@root/constants";
 import AddressOptions from "./addressOptions";
 import { Button } from "@root/components/ui";
 import { cn } from "@root/lib";
@@ -14,7 +14,7 @@ const address = {
    location: "In front of SBI e-corner New Delhi Hawaii Japan",
    district: "Jammu and Kashmir",
    state: "Arunachal Pradesh",
-   pincode: 786001,
+   pincode: "786001",
    country: "India",
 };
 

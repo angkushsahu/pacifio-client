@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 import authOptions from "@root/app/api/auth/authOptions";
 import ChangePasswordForm from "./changePasswordForm";
-import { loginUrl } from "@root/constants/routes";
+import { loginUrl } from "@root/constants";
 
 export const metadata: Metadata = {
    title: "Change Password - Pacifio",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function ChangePassword() {
    const session = await getServerSession(authOptions);
-   if (!session || !session.user || !session.token) redirect(loginUrl, RedirectType.replace);
+   if (!session?.user || !session?.token) redirect(loginUrl, RedirectType.replace);
 
    return (
       <main className="min-h-section max-w-xl mx-auto px-5 pt-8 pb-12 flex flex-col justify-center">

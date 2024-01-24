@@ -1,3 +1,5 @@
+import { Ban, Package, Plus, RefreshCw, ShoppingCart, Truck, UserCog, Users } from "lucide-react";
+
 import {
    adminCreateProductUrl,
    adminDeliveredOrdersUrl,
@@ -7,8 +9,7 @@ import {
    adminShippedOrdersUrl,
    adminUserRoleAdminUrl,
    adminUserRoleRegularUrl,
-} from "@root/constants/routes";
-import { Ban, Package, Plus, RefreshCw, ShoppingCart, Truck, UserCog, Users } from "lucide-react";
+} from "@root/constants";
 
 const adminNavigation = [
    {

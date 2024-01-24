@@ -2,7 +2,7 @@ import { MoreHorizontal, MousePointerSquare, Package } from "lucide-react";
 import Link from "next/link";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@root/components/ui";
-import { baseAdminViewOrderUrl, baseAdminViewUserUrl } from "@root/constants/routes";
+import { baseAdminViewOrderUrl, baseAdminViewUserUrl } from "@root/constants";
 
 export default function OrderActions({ id }: { id: string }) {
    return (

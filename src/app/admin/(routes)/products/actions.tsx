@@ -1,25 +1,31 @@
+"use client";
+
 import { MoreHorizontal, MousePointerSquare, Pencil, Trash } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Link from "next/link";
 
-import {
-   AlertDialog,
-   AlertDialogAction,
-   AlertDialogCancel,
-   AlertDialogContent,
-   AlertDialogDescription,
-   AlertDialogFooter,
-   AlertDialogHeader,
-   AlertDialogTitle,
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuTrigger,
-} from "@root/components/ui";
-import { baseAdminUpdateProductUrl, baseProductUrl } from "@root/constants/routes";
+import { AlertDialogDescription, AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, toast } from "@root/components/ui";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@root/components/ui";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent } from "@root/components/ui";
+import { baseAdminUpdateProductUrl, baseProductUrl, getAllProductsForAdminQueryKey } from "@root/constants";
+import type { ResponseType } from "@root/validations";
+import { useDeleteProduct } from "@root/hooks";
 
-export default function ProductActions({ id }: { id: string }) {
+export default function ProductActions({ id, token }: { id: string; token: string }) {
+   const queryClient = useQueryClient();
    const [showAlert, setShowAlert] = useState(false);
+
+   function onSuccess(data: ResponseType) {
+      queryClient.invalidateQueries({ queryKey: [getAllProductsForAdminQueryKey] });
+      toast({ title: data.message });
+   }
+   const { mutate: deleteProductMutation, isPending } = useDeleteProduct({ onSuccess });
+
+   function onProductDeletion() {
+      if (isPending) return;
+      deleteProductMutation({ id, token });
+   }
 
    return (
       <>
@@ -60,7 +66,9 @@ export default function ProductActions({ id }: { id: string }) {
                </AlertDialogHeader>
                <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>Delete</AlertDialogAction>
+                  <AlertDialogAction onClick={onProductDeletion} disabled={isPending}>
+                     Delete
+                  </AlertDialogAction>
                </AlertDialogFooter>
             </AlertDialogContent>
          </AlertDialog>

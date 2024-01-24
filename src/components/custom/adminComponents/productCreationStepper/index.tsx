@@ -4,7 +4,7 @@ import { CheckCircle2, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { adminCreateProductUrl, adminSelectDefaultProductImageUrl, adminUploadProductImageUrl } from "@root/constants/routes";
+import { adminCreateProductUrl, baseAdminSelectDefaultProductImageUrl, baseAdminUploadProductImageUrl } from "@root/constants";
 import { Button } from "@root/components/ui";
 import { cn } from "@root/lib";
 
@@ -16,8 +16,8 @@ export default function ProductCreationStepper() {
    useEffect(
       function () {
          if (pathname.includes(adminCreateProductUrl)) setCurrentStep(1);
-         if (pathname.includes(adminUploadProductImageUrl)) setCurrentStep(2);
-         if (pathname.includes(adminSelectDefaultProductImageUrl)) setCurrentStep(3);
+         if (pathname.includes(baseAdminUploadProductImageUrl)) setCurrentStep(2);
+         if (pathname.includes(baseAdminSelectDefaultProductImageUrl)) setCurrentStep(3);
       },
       [pathname]
    );

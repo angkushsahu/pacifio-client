@@ -2,31 +2,28 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Textarea } from "@root/components/ui";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@root/components/ui";
+import { type ContactFormType, contactFormSchema, type ResponseType } from "@root/validations";
+import { Button, Input, Textarea, toast } from "@root/components/ui";
+import { useContactHook } from "@root/hooks";
 
-const contactFormSchema = z.object({
-   name: z.string().min(1, { message: "Required field" }),
-   email: z.string().min(1, { message: "Required field" }).email({ message: "Please enter a valid e-mail" }),
-   subject: z.string().min(5, { message: "Minimum 5 characters" }),
-   message: z.string().min(20, { message: "Minimum 20 characters" }),
-});
-
-export type ContactFormType = z.infer<typeof contactFormSchema>;
-
-export interface ContactFormProps {
-   name: string;
-   email: string;
-}
-
-export default function ContactForm({ email, name }: ContactFormProps) {
+export default function ContactForm() {
    const contactForm = useForm<ContactFormType>({
       resolver: zodResolver(contactFormSchema),
-      defaultValues: { email, name, message: "", subject: "" },
+      defaultValues: { email: "", name: "", message: "", subject: "" },
    });
 
-   function onContact(values: ContactFormType) {}
+   function onSuccess(response: ResponseType) {
+      contactForm.reset();
+      toast({ title: response.message });
+   }
+   const { mutate: sendMail, isPending } = useContactHook({ onSuccess });
+
+   function onContact(values: ContactFormType) {
+      if (isPending) return;
+      sendMail(values);
+   }
 
    return (
       <Form {...contactForm}>
@@ -38,7 +35,7 @@ export default function ContactForm({ email, name }: ContactFormProps) {
                   <FormItem>
                      <FormLabel>Name</FormLabel>
                      <FormControl>
-                        <Input placeholder="e.g. John Doe" {...field} disabled={!!name} />
+                        <Input placeholder="e.g. John Doe" {...field} />
                      </FormControl>
                      <FormMessage />
                   </FormItem>
@@ -51,7 +48,7 @@ export default function ContactForm({ email, name }: ContactFormProps) {
                   <FormItem>
                      <FormLabel>E-mail</FormLabel>
                      <FormControl>
-                        <Input placeholder="e.g. johndoe@gmail.com" {...field} disabled={!!email} />
+                        <Input placeholder="e.g. johndoe@gmail.com" {...field} />
                      </FormControl>
                      <FormMessage />
                   </FormItem>
@@ -83,7 +80,7 @@ export default function ContactForm({ email, name }: ContactFormProps) {
                   </FormItem>
                )}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isPending}>
                Submit
             </Button>
          </form>

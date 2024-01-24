@@ -6,7 +6,7 @@ export default function LoadingProducts() {
          <h1 className="mb-6">Here are your results ....</h1>
          <div className="grid sm:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))] gap-12 sm:gap-10">
             {Array.from({ length: 6 }).map((_, idx) => (
-               <article key={"Product loader" + idx}>
+               <article key={"Product loader " + idx}>
                   <Skeleton className="h-80 bg-custom" />
                   <Skeleton className="mt-5 mb-2 h-7 bg-custom" />
                   <div className="flex">

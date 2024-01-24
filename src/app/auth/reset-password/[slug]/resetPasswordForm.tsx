@@ -4,24 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
-import type { AxiosError } from "axios";
 import { useState } from "react";
-import { z } from "zod";
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, toast } from "@root/components/ui";
-import { loginUrl } from "@root/constants/routes";
-import type { ResponseData } from "@root/types";
-import { errorSchema } from "@root/validations";
+import { resetPasswordFormSchema, type ResponseType, type ResetPasswordFormType } from "@root/validations";
 import { useResetPassword } from "@root/hooks";
-
-const resetPasswordFormSchema = z
-   .object({
-      password: z.string().min(1, { message: "Required field" }),
-      confirmPassword: z.string().min(1, { message: "Required field" }),
-   })
-   .refine((data) => data.password === data.confirmPassword, { path: ["confirmPassword"], message: "Passwords do not match" });
-
-export type ResetPasswordFormType = z.infer<typeof resetPasswordFormSchema>;
+import { loginUrl } from "@root/constants";
 
 export default function ResetPasswordForm({ resetId }: { resetId: string }) {
    const router = useRouter();
@@ -33,18 +21,12 @@ export default function ResetPasswordForm({ resetId }: { resetId: string }) {
       defaultValues: { password: "", confirmPassword: "" },
    });
 
-   function onSuccess(data: ResponseData) {
+   function onSuccess(data: ResponseType) {
       resetPasswordForm.reset();
       toast({ title: data.message });
       router.replace(loginUrl);
    }
-   function onError(error: AxiosError) {
-      const validatedError = errorSchema.safeParse(error.response?.data);
-      if (validatedError.success) toast({ title: validatedError.data.message, variant: "destructive" });
-      else toast({ title: error.message, variant: "destructive" });
-   }
-
-   const { mutate: resetPassword, isPending } = useResetPassword({ onError, onSuccess });
+   const { mutate: resetPassword, isPending } = useResetPassword({ onSuccess });
 
    function onResetPassword(values: ResetPasswordFormType) {
       if (isPending) return;
