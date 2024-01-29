@@ -3,8 +3,8 @@ import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
 
 import authOptions from "@root/app/api/auth/authOptions";
-import { loginUrl } from "@root/constants";
 import ParentComponent from "./parentComponent";
+import { loginUrl } from "@root/constants";
 
 export const metadata: Metadata = {
    title: "Saved addresses - Pacifio",

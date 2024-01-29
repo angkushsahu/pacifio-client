@@ -1,8 +1,8 @@
-import { MoreHorizontal, MousePointerSquare, Package } from "lucide-react";
+import { MoreHorizontal, Package } from "lucide-react";
 import Link from "next/link";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@root/components/ui";
-import { baseAdminViewOrderUrl, baseAdminViewUserUrl } from "@root/constants";
+import { baseAdminViewOrderUrl } from "@root/constants";
 
 export default function OrderActions({ id }: { id: string }) {
    return (
@@ -17,12 +17,6 @@ export default function OrderActions({ id }: { id: string }) {
                <Link href={`${baseAdminViewOrderUrl}/${id}`}>
                   <Package className="mr-2 h-4 w-4" />
                   <span>View Order</span>
-               </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild className="cursor-pointer">
-               <Link href={`${baseAdminViewUserUrl}/${id}`}>
-                  <MousePointerSquare className="mr-2 h-4 w-4" />
-                  <span>View User</span>
                </Link>
             </DropdownMenuItem>
          </DropdownMenuContent>

@@ -8,6 +8,7 @@ export interface AdminTableProps {
    Actions: ({ id, token }: { id: string; token: string }) => JSX.Element;
    bodyElements: Array<Record<string, string | number>>;
    headElements: Array<string>;
+   bodyKeys: Array<string>;
    currentPage: number;
    totalPages: number;
    setPage: Dispatch<SetStateAction<number>>;
@@ -16,7 +17,7 @@ export interface AdminTableProps {
 }
 
 export default function AdminTable(props: AdminTableProps) {
-   const { Actions, bodyElements, currentPage, headElements, parentPage, setPage, totalPages, token } = props;
+   const { Actions, bodyElements, bodyKeys, currentPage, headElements, parentPage, setPage, totalPages, token } = props;
 
    function goToPreviousPage() {
       setPage((currentPage) => {
@@ -56,7 +57,7 @@ export default function AdminTable(props: AdminTableProps) {
                         {headElements.map((element, idx) => (
                            <TD key={`${rows.id} - ${element}`}>
                               <span className="font-semibold lg:hidden">{headElements[idx]} : </span>
-                              <span className="break-all">{rows[element.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, "")]}</span>
+                              <span className="break-all">{rows[bodyKeys[idx]]}</span>
                            </TD>
                         ))}
                         <TD>{Actions ? <Actions id={rows.id as string} token={token} /> : null}</TD>

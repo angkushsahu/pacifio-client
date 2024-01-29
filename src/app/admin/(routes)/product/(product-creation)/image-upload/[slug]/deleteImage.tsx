@@ -5,8 +5,8 @@ import { ContextMenuContent, ContextMenuItem, toast } from "@root/components/ui"
 import type { ProductResponseType } from "@root/validations";
 import { getProductQueryKey } from "@root/constants";
 import type { ChildProps } from "./parentComponent";
-import deleteImage from "@root/lib/deleteImage";
 import { useDeleteImage } from "@root/hooks";
+import { deleteImage } from "@root/lib";
 
 export interface DeleteImageProps extends ChildProps {
    publicUrl: string;

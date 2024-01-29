@@ -1,8 +1,8 @@
 "use client";
 
 import { useGetMyAccount } from "@root/hooks";
-import Loading from "@root/app/loading";
 import UpdateForm from "./updateForm";
+import Loading from "./loading";
 
 export default function UserInfo({ token }: { token: string }) {
    const { data: response } = useGetMyAccount({ enabled: true, token });

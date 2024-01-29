@@ -1,8 +1,8 @@
 import Link from "next/link";
 
+import { AddressOptions } from "@root/components/custom";
 import type { AddressType } from "@root/validations";
 import { createAddressUrl } from "@root/constants";
-import AddressOptions from "./addressOptions";
 import { Button } from "@root/components/ui";
 
 export interface ShowAllAddressProps {

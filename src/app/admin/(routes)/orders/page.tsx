@@ -1,7 +1,10 @@
-import { notFound } from "next/navigation";
+import { RedirectType, notFound, redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 import type { OrderStatusType, ServerPageProps } from "@root/types";
+import authOptions from "@root/app/api/auth/authOptions";
 import ParentComponent from "./parentComponent";
+import { loginUrl } from "@root/constants";
 import { getMetadata } from "@root/lib";
 
 export function generateMetadata({ searchParams }: ServerPageProps) {
@@ -13,9 +16,12 @@ export function generateMetadata({ searchParams }: ServerPageProps) {
    });
 }
 
-export default function AdminOrders({ searchParams }: ServerPageProps) {
+export default async function AdminOrders({ searchParams }: ServerPageProps) {
    const { status } = searchParams;
    if (!status || typeof status !== "string") notFound();
 
-   return <ParentComponent status={status as OrderStatusType} />;
+   const session = await getServerSession(authOptions);
+   if (!session?.user || !session?.token) redirect(loginUrl, RedirectType.replace);
+
+   return <ParentComponent status={status as OrderStatusType} token={session.token} />;
 }

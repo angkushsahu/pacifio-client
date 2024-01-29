@@ -39,8 +39,7 @@ export default function ParentComponent() {
                      rating={product.rating.averageRating}
                      reviews={product.rating.numberOfReviews}
                      title={product.name}
-                     // image={product.defaultImage.secureUrl}
-                     image="https://res.cloudinary.com/dvhucdquc/image/upload/v1688629061/pacifio/miscellaneous/banner-keyboard_jpsbah.png"
+                     image={product.defaultImage.secureUrl}
                      link={`${baseProductUrl}/${product.id}`}
                      idx={idx + 1}
                   />

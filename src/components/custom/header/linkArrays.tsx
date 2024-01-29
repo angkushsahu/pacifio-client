@@ -17,8 +17,8 @@ export const commonNavItems = [
 ];
 
 export const authenticatedItems = [
-   { Icon: UserRound, title: "ACCOUNT", link: userAccountUrl },
    { Icon: ShoppingBasket, title: "SHOPPING BAG", link: shoppingBagUrl },
+   { Icon: UserRound, title: "ACCOUNT", link: userAccountUrl },
    { Icon: ShieldCheck, title: "ADMIN DASHBOARD", link: adminDashboardUrl },
 ];
 

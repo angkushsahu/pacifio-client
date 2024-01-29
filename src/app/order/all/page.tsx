@@ -1,11 +1,18 @@
+import { RedirectType, redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
 
+import authOptions from "@root/app/api/auth/authOptions";
 import ParentComponent from "./parentComponent";
+import { loginUrl } from "@root/constants";
 
 export const metadata: Metadata = {
    title: "Order History - Pacifio",
 };
 
-export default function AllOrders() {
-   return <ParentComponent />;
+export default async function AllOrders() {
+   const session = await getServerSession(authOptions);
+   if (!session?.user || !session?.token) redirect(loginUrl, RedirectType.replace);
+
+   return <ParentComponent token={session.token} />;
 }

@@ -11,10 +11,10 @@ import { useAddImage } from "@root/hooks";
 
 export interface UploadImageProps extends ChildProps {
    images: Array<ProductImageType>;
-   fileName: string;
+   folderName: string;
 }
 
-export default function UploadImage({ fileName, images, productId, token }: UploadImageProps) {
+export default function UploadImage({ folderName, images, productId, token }: UploadImageProps) {
    const queryClient = useQueryClient();
 
    function onSuccess(response: ProductImageResponseType) {
@@ -41,7 +41,7 @@ export default function UploadImage({ fileName, images, productId, token }: Uplo
             <CldUploadButton
                uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
                onUpload={(e) => onImageUpload(e as CloudinaryResultsType)}
-               options={{ folder: `pacifio/temp-files/${fileName}`, maxFiles: 4 }}
+               options={{ folder: folderName, maxFiles: 4 }}
             >
                {images.length >= 1 ? "Upload More Images" : "Upload Image"}
             </CldUploadButton>

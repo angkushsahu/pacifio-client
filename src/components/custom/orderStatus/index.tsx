@@ -1,4 +1,4 @@
-import { OrderStatusType } from "@root/types";
+import type { OrderStatusType } from "@root/types";
 import { Badge } from "@root/components/ui";
 import { cn } from "@root/lib";
 

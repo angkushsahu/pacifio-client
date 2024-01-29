@@ -3,7 +3,7 @@
 import { useGetAllAddress } from "@root/hooks";
 import ShowAllAddress from "./showAllAddress";
 import EmptyAddress from "./emptyAddress";
-import Loading from "@root/app/loading";
+import Loading from "./loading";
 
 export interface ParentComponentProps {
    userId: string;
@@ -12,9 +12,8 @@ export interface ParentComponentProps {
 
 export default function ParentComponent({ token, userId }: ParentComponentProps) {
    const { data: response } = useGetAllAddress({ enabled: !!userId, token });
-   if (!response?.data) return <Loading />;
+   if (!response) return <Loading />;
    const { data } = response;
-
    if (data.totalAddresses <= 0) return <EmptyAddress />;
 
    return (

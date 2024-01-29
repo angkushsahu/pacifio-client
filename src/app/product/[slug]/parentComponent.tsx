@@ -16,7 +16,7 @@ export default function ParentComponent({ slug, token }: { slug: string; token: 
    return (
       <main className="min-h-section center-layout py-8 px-4">
          <section className="flex flex-col lg:flex-row gap-10">
-            {product.images ? (
+            {product.images?.length ? (
                <section className="flex-1">
                   <ProductCarousel images={product.images} title={product.name} />
                </section>

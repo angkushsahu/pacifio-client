@@ -1,32 +1,17 @@
 import Link from "next/link";
 
 import { OrderStatus, PaymentStatus } from "@root/components/custom";
+import type { OrderType } from "@root/validations";
 import { viewOrderUrl } from "@root/constants";
 import { shortenSentence } from "@root/lib";
 
-const order = {
-   orderId: "something",
-   orderedOn: "26th July, 2023",
-   deliveredOn: "29th September, 2023",
-   paymentStatus: "not-paid",
-   deliveryStatus: "delivered",
-   items: [
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima nobis, atque vel qui nulla facilis sapiente placeat, repellat fugit ducimus aperiam modi! Magni soluta maiores nemo dicta eligendi aut dolorum.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima nobis, atque vel qui nulla facilis sapiente placeat, repellat fugit ducimus aperiam modi! Magni soluta maiores nemo dicta eligendi aut dolorum.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima nobis, atque vel qui nulla facilis sapiente placeat, repellat fugit ducimus aperiam modi! Magni soluta maiores nemo dicta eligendi aut dolorum.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima nobis, atque vel qui nulla facilis sapiente placeat, repellat fugit ducimus aperiam modi! Magni soluta maiores nemo dicta eligendi aut dolorum.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima nobis, atque vel qui nulla facilis sapiente placeat, repellat fugit ducimus aperiam modi! Magni soluta maiores nemo dicta eligendi aut dolorum.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima nobis, atque vel qui nulla facilis sapiente placeat, repellat fugit ducimus aperiam modi! Magni soluta maiores nemo dicta eligendi aut dolorum.",
-   ],
-};
-
-export default function OrderBox() {
+export default function OrderBox(order: OrderType) {
    return (
       <article className="bg-custom hover:bg-custom-hover p-5 shadow-md">
-         <p className="font-semibold text-lg mb-4">{order.orderedOn}</p>
+         <p className="font-semibold text-lg mb-4">{order.createdAt}</p>
          <ul>
-            {order.items.slice(0, 4).map((item, idx) => {
-               let { isLong, shortenedString } = shortenSentence({ sentence: item, maxCharacters: 35 });
+            {order.products.slice(0, 4).map((item, idx) => {
+               let { isLong, shortenedString } = shortenSentence({ sentence: item.name, maxCharacters: 35 });
                shortenedString += isLong ? " ...." : "";
 
                return (
@@ -35,24 +20,21 @@ export default function OrderBox() {
                   </li>
                );
             })}
-            {order.items.length > 4 ? (
-               <p className="mt-3 mb-4 text-custom-foreground">+ {order.items.length - 4} more items</p>
+            {order.products.length > 4 ? (
+               <p className="mt-3 mb-4 text-custom-foreground">+ {order.products.length - 4} more items</p>
             ) : null}
          </ul>
          <div>
-            <PaymentStatus status="paid" />
+            <PaymentStatus status={order.paymentInfo.status} />
          </div>
          <div className="flex items-center gap-x-2 my-3">
-            <OrderStatus status="delivered" />
-            {order.deliveryStatus === "delivered" ? (
-               <span className="text-sm text-custom-foreground"> on {order.deliveredOn}</span>
+            <OrderStatus status={order.deliveryInfo?.status || "processing"} />
+            {order.deliveryInfo?.status === "delivered" ? (
+               <span className="text-sm text-custom-foreground"> on {order.deliveryInfo?.time}</span>
             ) : null}
          </div>
          <div className="flex justify-end mt-2">
-            <Link
-               href={`${viewOrderUrl}/${order.orderId}`}
-               className="underline underline-offset-4 text-sm font-custom-foreground"
-            >
+            <Link href={`${viewOrderUrl}/${order.id}`} className="underline underline-offset-4 text-sm font-custom-foreground">
                Know more ....
             </Link>
          </div>

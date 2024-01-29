@@ -5,8 +5,8 @@ import type { ProductImageResponseType } from "@root/validations";
 import { ContextMenuItem, toast } from "@root/components/ui";
 import { getProductQueryKey } from "@root/constants";
 import type { ChildProps } from "./parentComponent";
-import deleteImage from "@root/lib/deleteImage";
 import { useDeleteImage } from "@root/hooks";
+import { deleteImage } from "@root/lib";
 
 export default function DeleteImage({ productId, publicUrl, secureUrl, token }: ChildProps) {
    const queryClient = useQueryClient();

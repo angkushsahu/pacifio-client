@@ -14,8 +14,8 @@ export default withAuth(
       });
       const responseJson: GetUserType = await apiResponse.json();
 
+      if (!responseJson?.data?.user) return NextResponse.rewrite(new URL(signupUrl, request.url));
       const { user } = responseJson.data;
-      if (!user) return NextResponse.rewrite(new URL(signupUrl, request.url));
 
       const { pathname } = request.nextUrl;
       if (pathname.startsWith("/admin") && user.role !== "admin" && user.role !== "super-admin")

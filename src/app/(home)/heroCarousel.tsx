@@ -1,19 +1,12 @@
 "use client";
 
-// import Autoplay from "embla-carousel-autoplay";
+import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-   type CarouselApi,
-   Carousel,
-   CarouselContent,
-   CarouselItem,
-   CarouselNext,
-   CarouselPrevious,
-   Button,
-} from "@root/components/ui";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@root/components/ui";
+import { Button, type CarouselApi } from "@root/components/ui";
 import { carouselItems } from "./carouselItems";
 import { cn } from "@root/lib";
 
@@ -38,8 +31,7 @@ export default function HeroCarousel() {
 
    return (
       <section className="bg-custom pb-2">
-         <Carousel setApi={setApi}>
-            {/* <Carousel plugins={[Autoplay({ duration: 3000 })]} setApi={setApi}> */}
+         <Carousel plugins={[Autoplay({ delay: 3000 })]} setApi={setApi}>
             <CarouselContent>
                {carouselItems.map((item, idx) => (
                   <CarouselItem key={`carousel-${idx + 1}`}>

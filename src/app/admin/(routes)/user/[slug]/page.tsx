@@ -1,12 +1,15 @@
 import { RedirectType, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import type { Metadata } from "next";
 
 import authOptions from "@root/app/api/auth/authOptions";
 import type { ServerPageProps } from "@root/types";
 import ParentComponent from "./parentComponent";
 import { loginUrl } from "@root/constants";
 
-// meta data comes here
+export const metadata: Metadata = {
+   title: "View User - Pacifio",
+};
 
 export default async function AdminViewUser({ params }: ServerPageProps) {
    const { slug } = params;

@@ -5,9 +5,8 @@ import type { Dispatch, SetStateAction } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { MIN_PRICE, MAX_PRICE, MIN_RATING, MAX_RATING } from "@root/constants";
+import { MIN_PRICE, MAX_PRICE, MIN_RATING, MAX_RATING, productsUrl } from "@root/constants";
 import { type SearchSchemaType, searchSchema } from "@root/validations";
-import { productsUrl } from "@root/constants";
 import SearchFormComponent from "./form";
 
 export interface SearchFormProps {

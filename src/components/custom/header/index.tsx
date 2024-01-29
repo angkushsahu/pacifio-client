@@ -2,8 +2,7 @@ import { getServerSession } from "next-auth";
 
 import authOptions from "@root/app/api/auth/authOptions";
 import ShadowUponScroll from "./shadowUponScroll";
-import NavAndSearch from "./navAndSearch";
-import NavLinks from "./navLinks";
+import ParentComponent from "./parentComponent";
 import Logo from "../logo";
 
 export default async function Header() {
@@ -12,9 +11,9 @@ export default async function Header() {
    return (
       <ShadowUponScroll>
          <div className="center-layout flex items-center justify-between">
-            <NavAndSearch isAuth={session?.token && session?.user ? true : false} />
-            <Logo />
-            <NavLinks token={session?.token} user={session?.user} />
+            <ParentComponent token={session?.token}>
+               <Logo />
+            </ParentComponent>
          </div>
       </ShadowUponScroll>
    );

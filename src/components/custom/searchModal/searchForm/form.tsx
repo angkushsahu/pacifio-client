@@ -1,5 +1,5 @@
 import { Search, SlidersHorizontal } from "lucide-react";
-import { type UseFormReturn } from "react-hook-form";
+import type { UseFormReturn } from "react-hook-form";
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Label } from "@root/components/ui";
 import { CategoryFilter, PriceFilter, RatingFilter } from "../../index";

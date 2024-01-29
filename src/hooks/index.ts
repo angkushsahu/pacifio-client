@@ -47,3 +47,21 @@ export { default as useRemoveFromBag } from "./shoppingBagHooks/useRemoveFromBag
 export { default as useAddToBag } from "./shoppingBagHooks/useAddToBag.hook";
 export { default as useGetBag } from "./shoppingBagHooks/useGetBag.hook";
 // shoppingBag hooks -- end
+// order hooks -- begin
+export { default as useGetAllOrdersForAdmin } from "./orderHooks/useGetAllOrdersForAdmin.hook";
+export { default as useUpdateDeliveryStatus } from "./orderHooks/useUpdateDeliveryStatus.hook";
+export { default as useGetAllTransactions } from "./orderHooks/useGetAllTransactions.hook";
+export { default as useGetOrderForAdmin } from "./orderHooks/useGetOrderForAdmin.hook";
+export { default as useGetAllOrders } from "./orderHooks/useGetAllOrders.hook";
+export { default as useCreateOrder } from "./orderHooks/useCreateOrder.hook";
+export { default as useGetOrder } from "./orderHooks/useGetOrder.hook";
+export { default as usePayment } from "./orderHooks/usePayment.hook";
+// order hooks -- end
+// dashboard hooks -- begin
+export { default as useTransactionInfo } from "./dashboard/useTransactionInfo.hook";
+export { default as useProductInfo } from "./dashboard/useProductInfo.hook";
+export { default as useRecentSales } from "./dashboard/useRecentSales.hook";
+export { default as useSalesGraph } from "./dashboard/useSalesGraph.hook";
+export { default as useOrderInfo } from "./dashboard/useOrderInfo.hook";
+export { default as useUserInfo } from "./dashboard/useUserInfo.hook";
+// dashboard hooks -- end

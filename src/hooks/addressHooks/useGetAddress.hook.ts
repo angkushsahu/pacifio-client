@@ -18,7 +18,7 @@ export async function getAddress({ id, token }: { token: string; id: string }) {
 
 export default function useGetAddress({ enabled, token, id }: { enabled: boolean; id: string; token: string }) {
    return useQuery({
-      queryKey: [getAddressQueryKey],
+      queryKey: [getAddressQueryKey, id],
       queryFn: () => getAddress({ token, id }),
       enabled,
    });

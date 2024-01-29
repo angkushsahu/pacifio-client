@@ -6,6 +6,7 @@ import { AdminSearch, AdminTable } from "@root/components/custom";
 import { useGetAllProductsForAdmin } from "@root/hooks";
 import type { ProductStockType } from "@root/types";
 import isOutofStock from "./isOutofStock";
+import { formatNumber } from "@root/lib";
 import ProductActions from "./actions";
 import Loading from "../loading";
 
@@ -37,18 +38,26 @@ export default function ParentComponent({ stock, token }: ParentComponentProps) 
    });
    if (!response) return <Loading />;
 
-   const { products } = response.data;
-
-   const { numberOfFetchedProducts, totalProducts } = response.data;
+   const { numberOfFetchedProducts, products, totalProducts } = response.data;
    const totalPages = numberOfFetchedProducts && totalProducts ? Math.ceil(totalProducts / numberOfFetchedProducts) : 0;
    const currentPage = numberOfFetchedProducts && totalProducts ? page : 0;
+
+   const productTableContents = products.map((product) => ({
+      name: product.name,
+      price: `₹ ${formatNumber(product.price)}`,
+      category: product.category[0].toUpperCase() + product.category.substring(1),
+      stock: formatNumber(product.stock),
+      id: product.id,
+   }));
+   const bodyKeys = productTableContents[0] ? Object.keys(productTableContents[0]) : [];
 
    return (
       <div>
          <h1 className="font-semibold text-3xl">{isOutofStock(stock)} Products</h1>
          <AdminSearch setValue={setValue} value={value} placeholder={`Search ${isOutofStock(stock)} Products ....`} />
          <AdminTable
-            bodyElements={products as unknown as Array<Record<string, string | number>>}
+            bodyElements={productTableContents}
+            bodyKeys={bodyKeys}
             headElements={headContents}
             currentPage={currentPage}
             totalPages={totalPages}

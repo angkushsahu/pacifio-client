@@ -1,25 +1,24 @@
+import { RedirectType, redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 
-import backgroundImage from "@root/assets/orderSuccessBackground.svg";
-import successImage from "@root/assets/successImage.svg";
-import { homeUrl } from "@root/constants";
-import { Button } from "@root/components/ui";
+import authOptions from "@root/app/api/auth/authOptions";
+import { homeUrl, loginUrl } from "@root/constants";
+import type { ServerPageProps } from "@root/types";
+import ParentComponent from "./parentComponent";
 
 export const metadata: Metadata = {
    title: "Order placed successfully - Pacifio",
 };
 
-export default function OrderSuccess() {
-   return (
-      <main className="min-h-section center-layout px-5 py-8 flex flex-col items-center justify-center relative">
-         <Image src={backgroundImage} alt="Success Image" fill className="-z-10" />
-         <Image src={successImage} alt="Success Image" width="250" height="250" />
-         <p className="text-center text-lg font-semibold mb-4">Your order has been placed successfully</p>
-         <Link href={homeUrl}>
-            <Button>Keep Shopping</Button>
-         </Link>
-      </main>
-   );
+export default async function OrderSuccess({ searchParams }: ServerPageProps) {
+   const { order_id } = searchParams;
+   if (!order_id) redirect(homeUrl, RedirectType.replace);
+
+   const session = await getServerSession(authOptions);
+   if (!session?.user || !session?.token) redirect(loginUrl, RedirectType.replace);
+
+   const orderId = typeof order_id === "string" ? order_id : order_id[0];
+
+   return <ParentComponent orderId={orderId} token={session.token} />;
 }

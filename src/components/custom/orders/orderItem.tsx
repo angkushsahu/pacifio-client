@@ -2,25 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { formatNumber, getCardBackgroundColor, shortenSentence } from "@root/lib";
+import type { ShoppingBagItemType } from "@root/validations";
 import { baseProductUrl } from "@root/constants";
 
-export interface OrderItemProps {
-   productId: string;
-   productIdx: number;
-   image: string;
-   title: string;
-   price: number;
-   stock: number;
-   quantity: number;
-   totalPricePerItem: number;
-}
-
-export default function OrderItem(props: OrderItemProps) {
-   const { productId, productIdx, image, price, quantity, stock, title, totalPricePerItem } = props;
-   let { isLong, shortenedString } = shortenSentence({ maxCharacters: 40, sentence: title });
+export default function OrderItem(props: ShoppingBagItemType & { productIdx: number }) {
+   const { itemPrice, product, quantity, productIdx } = props;
+   const { _id, defaultImage, name, price } = product;
+   let { isLong, shortenedString } = shortenSentence({ maxCharacters: 40, sentence: name });
    shortenedString += isLong ? " ...." : "";
 
-   const linkToProduct = `${baseProductUrl}/${productId}`;
+   const linkToProduct = `${baseProductUrl}/${_id}`;
 
    return (
       <article className="py-5 flex flex-col sm:flex-row gap-x-5">
@@ -30,8 +21,8 @@ export default function OrderItem(props: OrderItemProps) {
                className="sm:w-60 h-48 flex items-center justify-center"
                style={{ backgroundColor: getCardBackgroundColor(productIdx) }}
             >
-               {image ? (
-                  <Image src={image} alt={title} width="200" height="160" />
+               {defaultImage.secureUrl ? (
+                  <Image src={defaultImage.secureUrl} alt={name} width="200" height="160" />
                ) : (
                   <p className="font-bold text-2xl text-custom-foreground">NO IMAGE</p>
                )}
@@ -49,7 +40,7 @@ export default function OrderItem(props: OrderItemProps) {
             </div>
             {/* product name, price per item, quantity -- end */}
             {/* totalPrice -- start */}
-            <p className="mt-4 sm:mt-0 text-xl font-semibold">₹ {formatNumber(totalPricePerItem)}</p>
+            <p className="mt-4 sm:mt-0 text-xl font-semibold">₹ {formatNumber(itemPrice)}</p>
          </section>
          {/* totalPrice -- end */}
       </article>

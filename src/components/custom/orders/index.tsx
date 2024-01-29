@@ -1,30 +1,23 @@
+import type { ShoppingBagItemType } from "@root/validations";
 import OrderSummary from "./orderSummary";
 import OrderItem from "./orderItem";
 
 export interface OrdersProps {
-   orderItem: {
-      totalItems: number;
-      totalPrice: number;
-      image: string;
-      title: string;
-      price: number;
-      productId: string;
-      stock: number;
-      quantity: number;
-      totalPricePerItem: number;
-   };
+   order: Array<ShoppingBagItemType>;
+   totalPrice: number;
+   totalItems: number;
 }
 
-export default function Orders({ orderItem }: OrdersProps) {
+export default function Orders({ order, totalItems, totalPrice }: OrdersProps) {
    return (
       <>
-         <OrderSummary totalItems={orderItem.totalItems} totalPrice={orderItem.totalPrice} />
+         <OrderSummary totalItems={totalItems} totalPrice={totalPrice} />
          <section className="border-y-[1px] border-custom-light divide-y-[1px] divide-custom-light">
-            {Array.from({ length: 5 }).map((_, idx) => (
+            {order.map((orderItem, idx) => (
                <OrderItem {...orderItem} productIdx={idx + 1} key={`order-item-${idx + 1}`} />
             ))}
          </section>
-         <OrderSummary totalItems={orderItem.totalItems} totalPrice={orderItem.totalPrice} />
+         <OrderSummary totalItems={totalItems} totalPrice={totalPrice} />
       </>
    );
 }

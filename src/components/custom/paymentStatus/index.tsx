@@ -1,6 +1,6 @@
 import { CheckCheck, X } from "lucide-react";
 
-import { PaymentStatusType } from "@root/types";
+import type { PaymentStatusType } from "@root/types";
 import { Badge } from "@root/components/ui";
 import { cn } from "@root/lib";
 

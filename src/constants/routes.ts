@@ -40,7 +40,7 @@ export const shippingUrl = "/shipping/choose-address";
 
 export const viewOrderUrl = "/order";
 export const allOrdersUrl = "/order/all";
-export const paymentUrl = "/order/payment";
+export const basePaymentUrl = "/order/payment";
 export const orderFailedUrl = "/order/failure";
 export const confirmOrderUrl = "/order/confirm";
-export const orderSuccessUrl = "/order/success";
+export const baseOrderSuccessUrl = "/order/success";

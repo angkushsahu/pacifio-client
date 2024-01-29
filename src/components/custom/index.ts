@@ -2,9 +2,11 @@ export { default as ProductCreationStepper } from "./adminComponents/productCrea
 export { default as AdminSidebar } from "./adminComponents/adminSidebar";
 export { default as AdminSearch } from "./adminComponents/adminSearch";
 export { default as AdminTable } from "./adminComponents/adminTable";
+export { default as AddressOptions } from "./address/addressOptions";
 export { default as CategoryFilter } from "./filters/categoryFilter";
 export { default as ProductStockBadge } from "./productStockBadge";
 export { default as RatingFilter } from "./filters/ratingFilter";
+export { default as AddressForm } from "./address/addressForm";
 export { default as PriceFilter } from "./filters/priceFilter";
 export { default as PaymentStatus } from "./paymentStatus";
 export { default as OrderStatus } from "./orderStatus";

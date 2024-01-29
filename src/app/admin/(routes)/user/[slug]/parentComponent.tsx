@@ -1,7 +1,7 @@
 "use client";
 
-import { useGetUser } from "@root/hooks";
 import UpdateUserRole from "./updateUserRole";
+import { useGetUser } from "@root/hooks";
 import Loading from "../../loading";
 
 export default function ParentComponent({ token, userId }: { token: string; userId: string }) {

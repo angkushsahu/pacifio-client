@@ -27,9 +27,10 @@ import { useDeleteAddress } from "@root/hooks";
 export interface AddressOptionsProps {
    addressId: string;
    token: string;
+   shippingRoute?: boolean;
 }
 
-export default function AddressOptions({ addressId, token }: AddressOptionsProps) {
+export default function AddressOptions({ addressId, token, shippingRoute = false }: AddressOptionsProps) {
    const queryClient = useQueryClient();
    const [showAlert, setShowAlert] = useState(false);
 
@@ -52,6 +53,8 @@ export default function AddressOptions({ addressId, token }: AddressOptionsProps
       deleteAddress({ id: addressId, token });
    }
 
+   const updateUrl = `${baseUpdateAddressUrl}/${addressId}${shippingRoute ? "?shipping=true" : ""}`;
+
    return (
       <>
          <DropdownMenu>
@@ -64,7 +67,7 @@ export default function AddressOptions({ addressId, token }: AddressOptionsProps
             </div>
             <DropdownMenuContent align="end">
                <DropdownMenuItem className="cursor-pointer">
-                  <Link href={`${baseUpdateAddressUrl}/${addressId}`} className="flex items-center w-full">
+                  <Link href={updateUrl} className="flex items-center w-full">
                      <Pencil className="mr-2 w-4 h-4" /> Edit
                   </Link>
                </DropdownMenuItem>

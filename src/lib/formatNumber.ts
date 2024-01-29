@@ -1,5 +1,5 @@
-export default function formatNumber(number: number, paise: boolean = true): string {
-   let formattedNumber = number.toLocaleString("en-IN", {
+export default function formatNumber(num: number, paise: boolean = true): string {
+   let formattedNumber = num.toLocaleString("en-IN", {
       style: "currency",
       currency: "INR",
    });

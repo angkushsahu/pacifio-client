@@ -9,12 +9,15 @@ import { AlertDialogDescription, AlertDialogHeader, AlertDialogFooter, AlertDial
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@root/components/ui";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent } from "@root/components/ui";
 import { baseAdminUpdateProductUrl, baseProductUrl, getAllProductsForAdminQueryKey } from "@root/constants";
+import { deleteAllProductImagesAndFolder, getFolderNameForCloudinary } from "@root/lib";
+import { useDeleteProduct, useGetProduct } from "@root/hooks";
 import type { ResponseType } from "@root/validations";
-import { useDeleteProduct } from "@root/hooks";
 
 export default function ProductActions({ id, token }: { id: string; token: string }) {
    const queryClient = useQueryClient();
    const [showAlert, setShowAlert] = useState(false);
+
+   const { data: productResponse, isLoading } = useGetProduct({ enabled: true, id });
 
    function onSuccess(data: ResponseType) {
       queryClient.invalidateQueries({ queryKey: [getAllProductsForAdminQueryKey] });
@@ -22,9 +25,15 @@ export default function ProductActions({ id, token }: { id: string; token: strin
    }
    const { mutate: deleteProductMutation, isPending } = useDeleteProduct({ onSuccess });
 
-   function onProductDeletion() {
-      if (isPending) return;
-      deleteProductMutation({ id, token });
+   async function onProductDeletion() {
+      if (isPending || isLoading || !productResponse?.data.product) return;
+
+      const { name: productName, images } = productResponse.data.product;
+      const folderName = getFolderNameForCloudinary({ productName });
+      const publicUrls = images.map((image) => image.publicUrl);
+
+      const response = await deleteAllProductImagesAndFolder({ folderName, publicUrls });
+      if (response) deleteProductMutation({ id, token });
    }
 
    return (

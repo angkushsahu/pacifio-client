@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Frown } from "lucide-react";
 import Link from "next/link";
 
-import { homeUrl } from "@root/constants";
 import { Button } from "@root/components/ui";
+import { homeUrl } from "@root/constants";
 
 export const metadata: Metadata = {
    title: "Order Failed - Pacifio",

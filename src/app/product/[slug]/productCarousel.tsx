@@ -1,6 +1,6 @@
 "use client";
 
-// import Autoplay from "embla-carousel-autoplay";
+import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
@@ -32,23 +32,13 @@ export default function ProductCarousel({ images, title }: ProductCarouselProps)
    );
 
    return (
-      <Carousel setApi={setApi} className="sticky top-28">
-         {/* <Carousel plugins={[Autoplay({ duration: 3000 })]} setApi={setApi}> */}
+      <Carousel plugins={[Autoplay({ delay: 3000 })]} setApi={setApi} className="sticky top-28">
          <CarouselContent>
             {images.map((image, idx) => {
                const imageInfo = `${title}-image-carousel-${idx + 1}`;
                return (
                   <CarouselItem key={imageInfo} className="flex items-center justify-center bg-custom">
-                     <Image
-                        src={
-                           "https://res.cloudinary.com/dvhucdquc/image/upload/v1688629061/pacifio/miscellaneous/banner-keyboard_jpsbah.png"
-                        }
-                        alt={imageInfo}
-                        loading="lazy"
-                        placeholder="empty"
-                        width="500"
-                        height="300"
-                     />
+                     <Image src={image.secureUrl} alt={imageInfo} loading="lazy" placeholder="empty" width="500" height="300" />
                   </CarouselItem>
                );
             })}

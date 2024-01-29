@@ -14,8 +14,7 @@ export default function ParentComponent({ token }: { token: string }) {
    const { data: response } = useGetBag({ enabled: !!token, token });
    if (!response) return <Loading />;
    const { products, totalPrice, totalProducts } = response.data.shoppingBag;
-
-   if (!response.data.shoppingBag.products.length) return <EmptyShoppingBag />;
+   if (!totalProducts) return <EmptyShoppingBag />;
 
    return (
       <main className="min-h-section center-layout px-5 py-8">

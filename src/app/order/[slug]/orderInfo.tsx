@@ -1,29 +1,9 @@
 import { OrderStatus, PaymentStatus } from "@root/components/custom";
+import type { AddressFormType, OrderType } from "@root/validations";
 
 export interface OrderInfoProps {
-   address: {
-      contact: string;
-      location: string;
-      city: string;
-      state: string;
-      country: string;
-      pincode: string;
-   };
-   order: {
-      orderedOn: string;
-      deliveredOn: string;
-      totalItems: number;
-      totalPrice: number;
-      image: string;
-      title: string;
-      price: number;
-      productId: string;
-      stock: number;
-      quantity: number;
-      totalPricePerItem: number;
-      paymentStatus: string;
-      deliveryStatus: string;
-   };
+   address: AddressFormType;
+   order: Pick<OrderType, "createdAt" | "paymentInfo" | "deliveryInfo">;
 }
 
 export default function OrderInfo({ address, order }: OrderInfoProps) {
@@ -34,13 +14,13 @@ export default function OrderInfo({ address, order }: OrderInfoProps) {
                <td className="md:w-56 lg:w-96 p-3 bg-custom md:bg-transparent md:border-r-2 border-custom-marker font-semibold">
                   Order Placed on
                </td>
-               <td className="w-full p-3 md:pl-4">{order.orderedOn}</td>
+               <td className="w-full p-3 md:pl-4">{order.createdAt}</td>
             </tr>
             <tr className="flex flex-col md:flex-row md:even:bg-custom">
                <td className="md:w-56 lg:w-96 p-3 bg-custom md:bg-transparent md:border-r-2 border-custom-marker font-semibold">
                   Customer Contact
                </td>
-               <td className="w-full p-3 md:pl-4">{address.contact}</td>
+               <td className="w-full p-3 md:pl-4">{address.contactNumber}</td>
             </tr>
             <tr className="flex flex-col md:flex-row md:even:bg-custom">
                <td className="md:w-56 lg:w-96 p-3 bg-custom md:bg-transparent md:border-r-2 border-custom-marker font-semibold">
@@ -59,7 +39,7 @@ export default function OrderInfo({ address, order }: OrderInfoProps) {
                   Payment Status
                </td>
                <td className="w-full p-3 md:pl-4">
-                  <PaymentStatus status="not-paid" />
+                  <PaymentStatus status={order.paymentInfo.status} />
                </td>
             </tr>
             <tr className="flex flex-col md:flex-row md:even:bg-custom">
@@ -67,8 +47,8 @@ export default function OrderInfo({ address, order }: OrderInfoProps) {
                   Order Status
                </td>
                <td className="w-full p-3 md:pl-4">
-                  <OrderStatus status="delivered" />
-                  {order.deliveryStatus === "delivered" ? <span className="text-sm"> on {order.deliveredOn}</span> : null}
+                  <OrderStatus status={order.deliveryInfo?.status || "processing"} />
+                  {order.deliveryInfo?.status === "delivered" ? <span className="text-sm"> on {order.createdAt}</span> : null}
                </td>
             </tr>
          </tbody>
