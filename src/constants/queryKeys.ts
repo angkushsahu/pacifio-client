@@ -27,7 +27,7 @@ export const getShoppingBagQueryKey = "shopping-bag";
 // dashboard query keys -- begin
 export const getGraphDataQueryKey = "dashboard-sales-graph";
 export const getRecentSalesQueryKey = "dashboard-recent-sales";
-export const getTransactionInfoQueryKey = "dashboard-recent-sales";
+export const getTransactionInfoQueryKey = "dashboard-transaction-info";
 export const getProductInfoQueryKey = "dashboard-product-info";
 export const getOrderInfoQueryKey = "dashboard-order-info";
 export const getUserInfoQueryKey = "dashboard-user-info";
