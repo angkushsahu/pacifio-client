@@ -42,12 +42,19 @@ export default function ParentComponent({ role, token }: ParentComponentProps) {
    const totalPages = numberOfFetchedUsers && totalUsers ? Math.ceil(totalUsers / numberOfFetchedUsers) : 0;
    const currentPage = numberOfFetchedUsers && totalUsers ? page : 0;
 
-   const userTableContents = users.map((user) => ({
-      name: user.name,
-      email: user.email,
-      role: user.role[0].toUpperCase() + user.role.substring(1),
-      id: user.id,
-   }));
+   const userTableContents = users.map((user) => {
+      /**
+       * trims the characters after first 6 characters and till the @ part
+       * for example: angkushsahu2502@gmail.com becomes -> "angkus.....@gmail.com"
+       * */
+      const email = user.email.substring(0, 6) + "....." + user.email.substring(user.email.lastIndexOf("@"));
+      return {
+         name,
+         email,
+         role: user.role[0].toUpperCase() + user.role.substring(1),
+         id: user.id,
+      };
+   });
    const bodyKeys = userTableContents[0] ? Object.keys(userTableContents[0]) : [];
 
    return (
@@ -55,7 +62,7 @@ export default function ParentComponent({ role, token }: ParentComponentProps) {
          <h1 className="font-semibold text-3xl">{userRole} Users</h1>
          <AdminSearch setValue={setValue} value={value} placeholder={`Search ${userRole} Users ....`} />
          <AdminTable
-            bodyElements={userTableContents}
+            bodyElements={userTableContents as unknown as Array<Record<string, string | number>>}
             bodyKeys={bodyKeys}
             headElements={headContents}
             currentPage={currentPage}

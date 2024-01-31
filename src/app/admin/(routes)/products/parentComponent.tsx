@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 import { AdminSearch, AdminTable } from "@root/components/custom";
+import { formatNumber, shortenSentence } from "@root/lib";
 import { useGetAllProductsForAdmin } from "@root/hooks";
 import type { ProductStockType } from "@root/types";
 import isOutofStock from "./isOutofStock";
-import { formatNumber } from "@root/lib";
 import ProductActions from "./actions";
 import Loading from "../loading";
 
@@ -42,13 +42,21 @@ export default function ParentComponent({ stock, token }: ParentComponentProps) 
    const totalPages = numberOfFetchedProducts && totalProducts ? Math.ceil(totalProducts / numberOfFetchedProducts) : 0;
    const currentPage = numberOfFetchedProducts && totalProducts ? page : 0;
 
-   const productTableContents = products.map((product) => ({
-      name: product.name,
-      price: `₹ ${formatNumber(product.price)}`,
-      category: product.category[0].toUpperCase() + product.category.substring(1),
-      stock: formatNumber(product.stock),
-      id: product.id,
-   }));
+   const productTableContents = products.map((product) => {
+      /**
+       * trims the characters after first 6 characters and till the @ part
+       * for example: angkushsahu2502@gmail.com becomes -> "angkus.....@gmail.com"
+       * */
+      const { isLong, shortenedString: name } = shortenSentence({ maxCharacters: 55, sentence: product.name });
+
+      return {
+         name: isLong ? name + "....." : product.name,
+         price: `₹ ${formatNumber(product.price)}`,
+         category: product.category[0].toUpperCase() + product.category.substring(1),
+         stock: formatNumber(product.stock),
+         id: product.id,
+      };
+   });
    const bodyKeys = productTableContents[0] ? Object.keys(productTableContents[0]) : [];
 
    return (

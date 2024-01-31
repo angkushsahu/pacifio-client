@@ -32,11 +32,20 @@ export default function ParentComponent({ token }: { token: string }) {
 
    const orderTableContents = orders.map((order) => {
       let paymentId = order.paymentInfo.id as string;
+      /**
+       * paymentId
+       * trims the characters after first 4 characters and till the last 4 characters
+       * customerMail
+       * trims the characters after first 6 characters and till the @ part
+       * for example: angkushsahu2502@gmail.com becomes -> "angkus.....@gmail.com"
+       * */
       paymentId = paymentId.substring(0, 4) + "....." + paymentId.substring(paymentId.length - 4);
+      const customerMail =
+         order.user.email.substring(0, 6) + "....." + order.user.email.substring(order.user.email.lastIndexOf("@"));
 
       return {
          customerName: order.user.name,
-         customerMail: order.user.email,
+         customerMail,
          amount: `₹ ${formatNumber(order.totalPrice)}`,
          paymentId,
          date: formatDate({ date: order.createdAt }),
