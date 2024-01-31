@@ -49,7 +49,7 @@ export default function ParentComponent({ role, token }: ParentComponentProps) {
        * */
       const email = user.email.substring(0, 6) + "....." + user.email.substring(user.email.lastIndexOf("@"));
       return {
-         name,
+         name: user.name,
          email,
          role: user.role[0].toUpperCase() + user.role.substring(1),
          id: user.id,
