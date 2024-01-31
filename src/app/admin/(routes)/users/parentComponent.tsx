@@ -38,9 +38,7 @@ export default function ParentComponent({ role, token }: ParentComponentProps) {
    });
    if (!response) return <Loading />;
 
-   const { numberOfFetchedUsers, totalUsers, users } = response.data;
-   const totalPages = numberOfFetchedUsers && totalUsers ? Math.ceil(totalUsers / numberOfFetchedUsers) : 0;
-   const currentPage = numberOfFetchedUsers && totalUsers ? page : 0;
+   const { totalPages, users } = response.data;
 
    const userTableContents = users.map((user) => {
       /**
@@ -65,7 +63,7 @@ export default function ParentComponent({ role, token }: ParentComponentProps) {
             bodyElements={userTableContents as unknown as Array<Record<string, string | number>>}
             bodyKeys={bodyKeys}
             headElements={headContents}
-            currentPage={currentPage}
+            currentPage={page}
             totalPages={totalPages}
             Actions={UserActions}
             setPage={setPage}

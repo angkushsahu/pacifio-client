@@ -17,8 +17,10 @@ export async function getAllReviews({ pageParam, productId }: { pageParam: numbe
 export default function useGetAllReviews({ productId }: { productId: string }) {
    return useInfiniteQuery({
       initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages) =>
-         (lastPage as AllReviewResponseType).data.reviews.length ? allPages.length + 1 : undefined,
+      getNextPageParam: (lastPage, allPages) => {
+         const { totalPages } = (lastPage as AllReviewResponseType).data;
+         return allPages.length < totalPages ? allPages.length + 1 : undefined;
+      },
       queryKey: [getAllReviewsQueryKey, productId],
       queryFn: ({ pageParam }) => getAllReviews({ pageParam, productId } as { pageParam: number; productId: string }),
    });

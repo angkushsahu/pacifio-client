@@ -31,6 +31,7 @@ export const allUsersResponseSchema = responseSchema.merge(
    z.object({
       data: z.object({
          totalUsers: z.number(),
+         totalPages: z.number(),
          numberOfFetchedUsers: z.number(),
          users: z.array(userSchema),
       }),

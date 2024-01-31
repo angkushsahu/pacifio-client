@@ -25,9 +25,7 @@ export default function ParentComponent({ token }: { token: string }) {
                .map((order, idx) => <OrderBox key={`Order-${idx + 1}`} {...order} />)}
          </section>
          <div className="flex flex-col items-end mt-12">
-            {hasNextPage &&
-            (response?.pages[response.pages.length - 1] as AllOrdersResponseType).data.numberOfFetchedOrders <
-               (response?.pages[response.pages.length - 1] as AllOrdersResponseType).data.totalOrders ? (
+            {hasNextPage ? (
                <div className="text-center mt-12">
                   <Button variant="outline" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
                      Load More ....

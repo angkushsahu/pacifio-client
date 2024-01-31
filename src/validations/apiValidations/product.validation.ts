@@ -45,6 +45,7 @@ export const allProductsResponseSchema = responseSchema.merge(
    z.object({
       data: z.object({
          totalProducts: z.number(),
+         totalPages: z.number(),
          numberOfFetchedProducts: z.number(),
          products: z.array(
             productSchema.pick({

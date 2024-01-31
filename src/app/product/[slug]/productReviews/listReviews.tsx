@@ -34,9 +34,7 @@ export default function ProductReviews({ slug, token }: ProductReviewsProps) {
                         />
                      ))}
                </div>
-               {hasNextPage &&
-               (data?.pages[data.pages.length - 1] as AllReviewResponseType).data.numberOfFetchedReviews <
-                  (data?.pages[data.pages.length - 1] as AllReviewResponseType).data.totalReviews ? (
+               {hasNextPage ? (
                   <div className="text-center mt-12">
                      <Button variant="outline" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
                         Load More ....

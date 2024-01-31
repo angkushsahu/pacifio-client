@@ -23,6 +23,7 @@ export const allReviewResponseSchema = responseSchema.merge(
    z.object({
       data: z.object({
          totalReviews: z.number(),
+         totalPages: z.number(),
          numberOfFetchedReviews: z.number(),
          reviews: z.array(reviewSchema),
       }),

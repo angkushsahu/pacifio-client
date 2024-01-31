@@ -26,9 +26,7 @@ export default function ParentComponent({ token }: { token: string }) {
    const { data: response } = useGetAllTransactions({ pageNumber: page, token, query: deferredValue });
    if (!response) return <Loading />;
 
-   const { numberOfFetchedOrders, orders, totalOrders } = response.data;
-   const totalPages = numberOfFetchedOrders && totalOrders ? Math.ceil(totalOrders / numberOfFetchedOrders) : 0;
-   const currentPage = numberOfFetchedOrders && totalOrders ? page : 0;
+   const { orders, totalPages } = response.data;
 
    const orderTableContents = orders.map((order) => {
       let paymentId = order.paymentInfo.id as string;
@@ -62,7 +60,7 @@ export default function ParentComponent({ token }: { token: string }) {
             bodyElements={orderTableContents}
             headElements={headContents}
             bodyKeys={bodyKeys}
-            currentPage={currentPage}
+            currentPage={page}
             totalPages={totalPages}
             Actions={TransactionActions}
             setPage={setPage}

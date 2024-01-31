@@ -51,6 +51,7 @@ export const allOrdersResponseSchema = responseSchema.merge(
    z.object({
       data: z.object({
          totalOrders: z.number(),
+         totalPages: z.number(),
          numberOfFetchedOrders: z.number(),
          orders: z.array(orderSchema),
       }),

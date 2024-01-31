@@ -33,9 +33,7 @@ export default function ParentComponent({ status, token }: ParentComponentProps)
    const { data: response } = useGetAllOrdersForAdmin({ pageNumber: page, token, status, query: deferredValue });
    if (!response) return <Loading />;
 
-   const { numberOfFetchedOrders, orders, totalOrders } = response.data;
-   const totalPages = numberOfFetchedOrders && totalOrders ? Math.ceil(totalOrders / numberOfFetchedOrders) : 0;
-   const currentPage = numberOfFetchedOrders && totalOrders ? page : 0;
+   const { orders, totalPages } = response.data;
 
    const orderTableContents = orders.map((order) => {
       /**
@@ -63,7 +61,7 @@ export default function ParentComponent({ status, token }: ParentComponentProps)
             bodyElements={orderTableContents}
             headElements={headContents}
             bodyKeys={bodyKeys}
-            currentPage={currentPage}
+            currentPage={page}
             totalPages={totalPages}
             Actions={OrderActions}
             setPage={setPage}

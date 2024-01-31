@@ -19,8 +19,10 @@ export async function getAllOrders({ pageParam, token }: { pageParam: number; to
 export default function useGetAllOrders({ token }: { token: string }) {
    return useInfiniteQuery({
       initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages) =>
-         (lastPage as AllOrdersResponseType).data.orders.length ? allPages.length + 1 : undefined,
+      getNextPageParam: (lastPage, allPages) => {
+         const { totalPages } = (lastPage as AllOrdersResponseType).data;
+         return allPages.length < totalPages ? allPages.length + 1 : undefined;
+      },
       queryKey: [getAllOrdersQueryKey],
       queryFn: ({ pageParam }) => getAllOrders({ pageParam, token } as { pageParam: number; token: string }),
    });

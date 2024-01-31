@@ -46,9 +46,7 @@ export default function ParentComponent() {
                ))}
          </div>
          <div className="text-center mt-12">
-            {hasNextPage &&
-            (data.pages[data.pages.length - 1] as AllProductsResponseType).data.numberOfFetchedProducts <
-               (data.pages[data.pages.length - 1] as AllProductsResponseType).data.totalProducts ? (
+            {hasNextPage ? (
                <Button variant="outline" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
                   Load More ....
                </Button>

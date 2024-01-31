@@ -17,8 +17,10 @@ export async function getAllProducts({ pageParam, searchParams }: { pageParam: n
 export default function useGetAllProducts({ searchParams }: { searchParams: string }) {
    return useInfiniteQuery({
       initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages) =>
-         (lastPage as AllProductsResponseType).data.products.length ? allPages.length + 1 : undefined,
+      getNextPageParam: (lastPage, allPages) => {
+         const { totalPages } = (lastPage as AllProductsResponseType).data;
+         return allPages.length < totalPages ? allPages.length + 1 : undefined;
+      },
       queryKey: [getAllProductsQueryKey],
       queryFn: ({ pageParam }) => getAllProducts({ pageParam, searchParams } as { pageParam: number; searchParams: string }),
    });

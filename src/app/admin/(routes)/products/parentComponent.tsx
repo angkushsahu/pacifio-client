@@ -38,9 +38,7 @@ export default function ParentComponent({ stock, token }: ParentComponentProps) 
    });
    if (!response) return <Loading />;
 
-   const { numberOfFetchedProducts, products, totalProducts } = response.data;
-   const totalPages = numberOfFetchedProducts && totalProducts ? Math.ceil(totalProducts / numberOfFetchedProducts) : 0;
-   const currentPage = numberOfFetchedProducts && totalProducts ? page : 0;
+   const { products, totalPages } = response.data;
 
    const productTableContents = products.map((product) => {
       /**
@@ -67,7 +65,7 @@ export default function ParentComponent({ stock, token }: ParentComponentProps) 
             bodyElements={productTableContents}
             bodyKeys={bodyKeys}
             headElements={headContents}
-            currentPage={currentPage}
+            currentPage={page}
             totalPages={totalPages}
             Actions={ProductActions}
             setPage={setPage}
