@@ -11,17 +11,14 @@ import { baseOrderSuccessUrl, getAllOrdersQueryKey, getOrderQueryKey, getShoppin
 import { type PaymentFormType, paymentFormSchema, type OrderResponseType } from "@root/validations";
 import { Button, Input, toast } from "@root/components/ui";
 import { useCreateOrder, usePayment } from "@root/hooks";
-import Loading from "./loading";
 
 export interface PaymentFormProps {
    token: string;
    totalPrice: number;
    addressId: string;
-   loading: boolean;
 }
 
-export default function PaymentForm({ addressId, loading, token, totalPrice }: PaymentFormProps) {
-   if (loading) return <Loading />;
+export default function PaymentForm({ addressId, token, totalPrice }: PaymentFormProps) {
    const router = useRouter();
    const queryClient = useQueryClient();
 

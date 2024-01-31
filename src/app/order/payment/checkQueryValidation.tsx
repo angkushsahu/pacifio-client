@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from "@root/components/ui";
 import { shippingUrl, shoppingBagUrl } from "@root/constants";
 import { useGetAddress, useGetBag } from "@root/hooks";
 import PaymentForm from "./paymentForm";
+import Loading from "./loading";
 
 export interface CheckQueryValidationProps {
    token: string;
@@ -17,6 +18,7 @@ export default function CheckQueryValidation({ shippingId, token }: CheckQueryVa
    const router = useRouter();
    const { data: addressResponse, isError: addressError } = useGetAddress({ enabled: true, id: shippingId, token });
    const { data: shoppingBagResponse, isError: shoppingBagError } = useGetBag({ enabled: true, token });
+   if (!addressResponse?.data || !shoppingBagResponse?.data) return <Loading />;
    if (addressError) router.replace(shippingUrl);
    if (shoppingBagError) router.replace(shoppingBagUrl);
 
@@ -31,10 +33,9 @@ export default function CheckQueryValidation({ shippingId, token }: CheckQueryVa
          </Alert>
          <h1 className="font-semibold text-3xl my-6">Payment</h1>
          <PaymentForm
-            totalPrice={shoppingBagResponse?.data.shoppingBag.totalPrice as number}
+            totalPrice={shoppingBagResponse.data.shoppingBag.totalPrice as number}
             token={token}
             addressId={shippingId}
-            loading={!addressResponse || !shoppingBagResponse}
          />
       </main>
    );

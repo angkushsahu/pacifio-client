@@ -7,8 +7,8 @@ import { Orders } from "@root/components/custom";
 import { Button } from "@root/components/ui";
 import { homeUrl } from "@root/constants";
 import { useGetOrder } from "@root/hooks";
-import Loading from "@root/app/loading";
 import OrderInfo from "./orderInfo";
+import Loading from "./loading";
 
 export interface ParentComponentProps {
    token: string;
