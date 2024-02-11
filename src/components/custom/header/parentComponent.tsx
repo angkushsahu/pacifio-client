@@ -11,13 +11,13 @@ export interface ParentComponentProps extends PropsWithChildren {
 }
 
 export default function ParentComponent({ children, token }: ParentComponentProps) {
-   const { data: response } = useGetMyAccount({ enabled: !!token, token: token as string });
+   const { data: response, isLoading } = useGetMyAccount({ enabled: !!token, token: token as string });
 
    return (
       <>
-         <NavAndSearch user={response?.data.user} />
+         <NavAndSearch user={response?.data.user} isLoading={isLoading} />
          {children}
-         <NavLinks user={response?.data.user} token={token} />
+         <NavLinks user={response?.data.user} isLoading={isLoading} token={token} />
       </>
    );
 }

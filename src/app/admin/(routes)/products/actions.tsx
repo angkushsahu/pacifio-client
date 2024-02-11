@@ -28,11 +28,10 @@ export default function ProductActions({ id, token }: { id: string; token: strin
    async function onProductDeletion() {
       if (isPending || isLoading || !productResponse?.data.product) return;
 
-      const { name: productName, images } = productResponse.data.product;
+      const { name: productName } = productResponse.data.product;
       const folderName = getFolderNameForCloudinary({ productName });
-      const publicUrls = images.map((image) => image.publicUrl);
 
-      const response = await deleteAllProductImagesAndFolder({ folderName, publicUrls });
+      const response = await deleteAllProductImagesAndFolder({ folderName });
       if (response) deleteProductMutation({ id, token });
    }
 

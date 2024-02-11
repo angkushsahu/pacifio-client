@@ -12,10 +12,11 @@ import { userAvatarName } from "@root/lib";
 export interface NavLinksProps {
    user: UserType | undefined;
    token: string | undefined;
+   isLoading: boolean;
 }
 
-export default function NavLinks({ token, user }: NavLinksProps) {
-   const navItems = user ? authenticatedItems : unAuthenticatedLinks;
+export default function NavLinks({ isLoading, token, user }: NavLinksProps) {
+   const navItems = isLoading ? [] : user ? authenticatedItems : unAuthenticatedLinks;
    const userAvatar = user?.name ? userAvatarName({ userName: user.name }) : "";
 
    return (

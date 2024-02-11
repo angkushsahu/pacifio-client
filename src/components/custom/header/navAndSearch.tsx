@@ -7,8 +7,13 @@ import { adminDashboardUrl } from "@root/constants";
 import type { UserType } from "@root/validations";
 import SearchModal from "../searchModal";
 
-export default function NavAndSearch({ user }: { user: UserType | undefined }) {
-   const navItems = [...commonNavItems, ...(user ? authenticatedItems : unAuthenticatedLinks)];
+export interface NavAndSearchProps {
+   user: UserType | undefined;
+   isLoading: boolean;
+}
+
+export default function NavAndSearch({ isLoading, user }: NavAndSearchProps) {
+   const navItems = [...commonNavItems, ...(isLoading ? [] : user ? authenticatedItems : unAuthenticatedLinks)];
 
    return (
       <div className="order-1 md:order-none flex items-center gap-x-3 sm:gap-x-4">

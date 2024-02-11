@@ -11,11 +11,9 @@ export async function deleteImage({ publicUrl }: { publicUrl: string }) {
    }
 }
 
-export type DeleteAllProductImagesArgs = { folderName: string; publicUrls: Array<string> };
-
-export async function deleteAllProductImagesAndFolder({ folderName, publicUrls }: DeleteAllProductImagesArgs) {
+export async function deleteAllProductImagesAndFolder({ folderName }: { folderName: string }) {
    try {
-      await cloudinary.api.delete_all_resources(publicUrls);
+      await cloudinary.api.delete_resources_by_prefix(folderName);
       await cloudinary.api.delete_folder(folderName);
       return true;
    } catch (error: unknown) {
