@@ -5,7 +5,7 @@ export const carouselItems = [
       title: "New Gen Keyboards",
       subTitle: "Upgrade your gaming setup with a keyboard that's as fierce as you are",
       linkToCategory: `${productsUrl}?category=keyboard`,
-      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1706535125/pacifio/hero-section/yz4nbwnacnug1nxz0veu.avif",
+      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1707661144/pacifio/hero-section/m5ajkx0pdznq0y18qnjh.webp",
       descriptionSection: {
          title: "Shop Keyboards",
          description:
@@ -16,7 +16,7 @@ export const carouselItems = [
       title: "Cutting Edge Mouse",
       subTitle: "Step up your game with a mouse designed to give you the edge you need to win",
       linkToCategory: `${productsUrl}?category=mouse`,
-      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1706535261/pacifio/hero-section/z97truaehsi6ifgsqula.avif",
+      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1707661144/pacifio/hero-section/azavvnjyj4g1silr2iqu.webp",
       descriptionSection: {
          title: "Shop Mouse",
          description: "with programmable buttons and customizable lighting, a gaming mouse is the perfect weapon for any battle.",
@@ -26,7 +26,7 @@ export const carouselItems = [
       title: "Textured Mouse Pads",
       subTitle: "Unlock new levels of control and accuracy with a mouse pad that's built for gamers",
       linkToCategory: `${productsUrl}?category=mouse-pad`,
-      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1706535316/pacifio/hero-section/mgf2pikhxtlxintc8ys6.avif",
+      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1707661144/pacifio/hero-section/sy47rugduzflozsncqnw.webp",
       descriptionSection: {
          title: "Shop Mouse Pad",
          description: "with a textured surface and optimized tracking, you'll have the edge you need to claim victory.",
@@ -36,7 +36,7 @@ export const carouselItems = [
       title: "Performance Cooling Pads",
       subTitle: "Unlock new levels of power and stability with a cooling pad that's built for gamers",
       linkToCategory: `${productsUrl}?category=cooling-pad`,
-      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1706535181/pacifio/hero-section/heyrm6ktm2ibdbumvl1g.avif",
+      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1707661144/pacifio/hero-section/moqevmljcevnq9gt8hcq.webp",
       descriptionSection: {
          title: "Shop Cooling Pad",
          description: "with high-performance fans and a durable design, you'll have the edge you need to claim victory.",
@@ -46,7 +46,7 @@ export const carouselItems = [
       title: "Noise Cancelling Headsets",
       subTitle: "Step up your gaming experience with a headset that's built for performance",
       linkToCategory: `${productsUrl}?category=headset`,
-      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1706535180/pacifio/hero-section/iznehaxzxvgkowdoc4qh.avif",
+      image: "https://res.cloudinary.com/dvhucdquc/image/upload/v1707661144/pacifio/hero-section/ap8m6lcsgymk7lh0gqeb.webp",
       descriptionSection: {
          title: "Shop Headsets",
          description:
